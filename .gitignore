@@ -1,0 +1,4 @@
+apis/venv/
+apis/.vscode/
+apis/.env
+apis/__pycache__/
