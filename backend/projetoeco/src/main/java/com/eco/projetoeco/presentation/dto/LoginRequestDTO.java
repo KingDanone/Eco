@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class LoginRequestDto {
+public class LoginRequestDTO {
     @NotBlank
     private String identifier; // cpf ou email
 

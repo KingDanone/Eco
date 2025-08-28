@@ -1,7 +1,6 @@
 package com.eco.projetoeco.presentation.controller;
 
-import com.eco.projetoeco.presentation.dto.HorariosColetaDto;
-import com.eco.projetoeco.presentation.dto.HorariosColetaRequestDto;
+import com.eco.projetoeco.presentation.dto.HorariosColetaDTO;
 import com.eco.projetoeco.business.service.HorariosColetaService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +19,18 @@ public class HorariosColetaController {
     }
 
     @PostMapping
-    public ResponseEntity<HorariosColetaDto> criar(@RequestBody @Valid HorariosColetaRequestDto request) {
-        HorariosColetaDto criado = service.criar(request);
+    public ResponseEntity<HorariosColetaDTO> criar(@RequestBody @Valid HorariosColetaDTO dto) {
+        HorariosColetaDTO criado = service.criar(dto);
         return ResponseEntity.status(201).body(criado);
     }
 
     @GetMapping
-    public ResponseEntity<List<HorariosColetaDto>> listar() {
+    public ResponseEntity<List<HorariosColetaDTO>> listar() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HorariosColetaDto> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<HorariosColetaDTO> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

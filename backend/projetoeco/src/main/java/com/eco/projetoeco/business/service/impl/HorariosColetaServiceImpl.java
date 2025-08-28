@@ -1,7 +1,6 @@
 package com.eco.projetoeco.business.service.impl;
 
-import com.eco.projetoeco.presentation.dto.HorariosColetaDto;
-import com.eco.projetoeco.presentation.dto.HorariosColetaRequestDto;
+import com.eco.projetoeco.presentation.dto.HorariosColetaDTO;
 import com.eco.projetoeco.data.model.Endereco;
 import com.eco.projetoeco.data.model.HorariosColeta;
 import com.eco.projetoeco.data.repository.EnderecoRepository;
@@ -27,7 +26,7 @@ public class HorariosColetaServiceImpl implements HorariosColetaService {
 
     @Override
     @Transactional
-    public HorariosColetaDto criar(HorariosColetaRequestDto request) {
+    public HorariosColetaDTO criar(HorariosColetaDTO request) {
         Endereco endereco = enderecoRepository.findById(request.getEnderecoCep())
                 .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
 
@@ -38,21 +37,21 @@ public class HorariosColetaServiceImpl implements HorariosColetaService {
 
         HorariosColeta salvo = repository.save(coleta);
 
-        return new HorariosColetaDto(salvo.getId(), salvo.getDiaSemana(), salvo.getTurno(), salvo.getEndereco().getCep());
+        return new HorariosColetaDTO(salvo.getId(), salvo.getDiaSemana(), salvo.getTurno(), salvo.getEndereco().getCep());
     }
 
     @Override
-    public List<HorariosColetaDto> listarTodos() {
+    public List<HorariosColetaDTO> listarTodos() {
         return repository.findAll().stream()
-                .map(h -> new HorariosColetaDto(
+                .map(h -> new HorariosColetaDTO(
                         h.getId(), h.getDiaSemana(), h.getTurno(), h.getEndereco().getCep()
                 )).collect(Collectors.toList());
     }
 
     @Override
-    public Optional<HorariosColetaDto> buscarPorId(Long id) {
+    public Optional<HorariosColetaDTO> buscarPorId(Long id) {
         return repository.findById(id)
-                .map(h -> new HorariosColetaDto(
+                .map(h -> new HorariosColetaDTO(
                         h.getId(), h.getDiaSemana(), h.getTurno(), h.getEndereco().getCep()
                 ));
     }

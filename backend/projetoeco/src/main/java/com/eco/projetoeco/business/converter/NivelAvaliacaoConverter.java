@@ -1,6 +1,6 @@
 package com.eco.projetoeco.business.converter;
 
-import com.eco.projetoeco.data.model.NivelAvaliacao;
+import com.eco.projetoeco.data.model.enuns.NivelAvaliacao;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

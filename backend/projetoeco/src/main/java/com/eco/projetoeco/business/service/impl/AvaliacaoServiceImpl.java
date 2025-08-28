@@ -1,7 +1,6 @@
 package com.eco.projetoeco.business.service.impl;
 
-import com.eco.projetoeco.presentation.dto.AvaliacaoDto;
-import com.eco.projetoeco.presentation.dto.AvaliacaoRequestDto;
+import com.eco.projetoeco.presentation.dto.AvaliacaoDTO;
 import com.eco.projetoeco.data.model.Avaliacao;
 import com.eco.projetoeco.data.model.Jogos;
 import com.eco.projetoeco.data.model.Usuario;
@@ -30,8 +29,8 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
     }
 
     @Override
-    public AvaliacaoDto criar(AvaliacaoRequestDto dto) {
-        Usuario usuario = usuarioRepository.findById(dto.getCpfUsuario())
+    public AvaliacaoDTO criar(AvaliacaoDTO dto) {
+        Usuario usuario = usuarioRepository.findByCpf(dto.getCpfUsuario())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         Jogos jogo = jogosRepository.findById(dto.getIdJogo())
@@ -45,7 +44,7 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
 
         Avaliacao salva = avaliacaoRepository.save(avaliacao);
 
-        return new AvaliacaoDto(
+        return new AvaliacaoDTO(
                 salva.getId(),
                 usuario.getCpf(),
                 jogo.getId(),
@@ -56,9 +55,9 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
     }
 
     @Override
-    public List<AvaliacaoDto> listarTodos() {
+    public List<AvaliacaoDTO> listarTodos() {
         return avaliacaoRepository.findAll().stream()
-                .map(a -> new AvaliacaoDto(
+                .map(a -> new AvaliacaoDTO(
                         a.getId(),
                         a.getUsuario().getCpf(),
                         a.getJogo().getId(),

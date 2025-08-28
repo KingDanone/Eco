@@ -1,7 +1,6 @@
 package com.eco.projetoeco.presentation.controller;
 
-import com.eco.projetoeco.presentation.dto.AtendimentoDto;
-import com.eco.projetoeco.presentation.dto.AtendimentoRequestDto;
+import com.eco.projetoeco.presentation.dto.AtendimentoDTO;
 import com.eco.projetoeco.business.service.AtendimentoService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +19,17 @@ public class AtendimentoController {
     }
 
     @PostMapping
-    public ResponseEntity<AtendimentoDto> criar(@RequestBody @Valid AtendimentoRequestDto dto) {
+    public ResponseEntity<AtendimentoDTO> criar(@RequestBody @Valid AtendimentoDTO dto) {
         return ResponseEntity.ok(service.criar(dto));
     }
 
     @GetMapping
-    public ResponseEntity<List<AtendimentoDto>> listar() {
+    public ResponseEntity<List<AtendimentoDTO>> listar() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AtendimentoDto> buscar(@PathVariable Long id) {
+    public ResponseEntity<AtendimentoDTO> buscar(@PathVariable Long id) {
         return service.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

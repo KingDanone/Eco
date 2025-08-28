@@ -1,7 +1,7 @@
 package com.eco.projetoeco.presentation.controller;
 
 import com.eco.projetoeco.business.service.UsuarioService;
-import com.eco.projetoeco.presentation.dto.LoginRequestDto;
+import com.eco.projetoeco.presentation.dto.LoginRequestDTO;
 import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import com.eco.projetoeco.presentation.dto.UsuarioSenhaDTO;
 import jakarta.validation.Valid;
@@ -21,7 +21,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UsuarioDTO> login(@Valid @RequestBody LoginRequestDto loginRequest) {
+    public ResponseEntity<UsuarioDTO> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
         try {
             UsuarioDTO usuario = service.autenticar(loginRequest.getIdentifier(), loginRequest.getSenha());
             return ResponseEntity.ok(usuario);
@@ -52,7 +52,6 @@ public class UsuarioController {
         service.alterarSenha(cpf, dto);
         return ResponseEntity.noContent().build();
     }
-
 
     @GetMapping("/{cpf}")
     public ResponseEntity<UsuarioDTO> buscarPorCpf(@PathVariable String cpf) {

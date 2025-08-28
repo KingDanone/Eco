@@ -1,6 +1,8 @@
 package com.eco.projetoeco.data.model;
 
 
+import com.eco.projetoeco.data.model.enuns.DiaSemana;
+import com.eco.projetoeco.data.model.enuns.Turno;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

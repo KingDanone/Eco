@@ -1,7 +1,6 @@
 package com.eco.projetoeco.presentation.controller;
 
-import com.eco.projetoeco.presentation.dto.AvaliacaoDto;
-import com.eco.projetoeco.presentation.dto.AvaliacaoRequestDto;
+import com.eco.projetoeco.presentation.dto.AvaliacaoDTO;
 import com.eco.projetoeco.business.service.AvaliacaoService;
 import jakarta.validation.Valid;
 import org.springframework.http.*;
@@ -20,12 +19,12 @@ public class AvaliacaoController {
     }
 
     @PostMapping
-    public ResponseEntity<AvaliacaoDto> criar(@Valid @RequestBody AvaliacaoRequestDto dto) {
+    public ResponseEntity<AvaliacaoDTO> criar(@Valid @RequestBody AvaliacaoDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criar(dto));
     }
 
     @GetMapping
-    public ResponseEntity<List<AvaliacaoDto>> listarTodos() {
+    public ResponseEntity<List<AvaliacaoDTO>> listarTodos() {
         return ResponseEntity.ok(service.listarTodos());
     }
 

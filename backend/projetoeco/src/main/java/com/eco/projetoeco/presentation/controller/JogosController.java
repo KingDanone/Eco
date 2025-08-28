@@ -1,7 +1,6 @@
 package com.eco.projetoeco.presentation.controller;
 
-import com.eco.projetoeco.presentation.dto.JogosDto;
-import com.eco.projetoeco.presentation.dto.JogosRequestDto;
+import com.eco.projetoeco.presentation.dto.JogosDTO;
 import com.eco.projetoeco.business.service.JogosService;
 import jakarta.validation.Valid;
 import org.springframework.http.*;
@@ -20,17 +19,17 @@ public class JogosController {
     }
 
     @PostMapping
-    public ResponseEntity<JogosDto> criar(@Valid @RequestBody JogosRequestDto dto) {
+    public ResponseEntity<JogosDTO> criar(@Valid @RequestBody JogosDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criar(dto));
     }
 
     @GetMapping
-    public ResponseEntity<List<JogosDto>> listarTodos() {
+    public ResponseEntity<List<JogosDTO>> listarTodos() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JogosDto> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<JogosDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 

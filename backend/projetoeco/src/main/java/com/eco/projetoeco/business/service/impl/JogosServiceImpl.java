@@ -1,7 +1,6 @@
 package com.eco.projetoeco.business.service.impl;
 
-import com.eco.projetoeco.presentation.dto.JogosDto;
-import com.eco.projetoeco.presentation.dto.JogosRequestDto;
+import com.eco.projetoeco.presentation.dto.JogosDTO;
 import com.eco.projetoeco.data.model.Jogos;
 import com.eco.projetoeco.data.repository.JogosRepository;
 import com.eco.projetoeco.business.service.JogosService;
@@ -20,7 +19,7 @@ public class JogosServiceImpl implements JogosService {
     }
 
     @Override
-    public JogosDto criar(JogosRequestDto dto) {
+    public JogosDTO criar(JogosDTO dto) {
         Jogos jogo = new Jogos();
         jogo.setNome(dto.getNome());
         jogo.setGenero(dto.getGenero());
@@ -31,7 +30,7 @@ public class JogosServiceImpl implements JogosService {
 
         Jogos salvo = repository.save(jogo);
 
-        return new JogosDto(
+        return new JogosDTO(
                 salvo.getId(), salvo.getNome(), salvo.getGenero(),
                 salvo.getDescricao(), salvo.getDataLancamento(),
                 salvo.getDesenvolvedor(), salvo.getLinkJogo()
@@ -39,19 +38,19 @@ public class JogosServiceImpl implements JogosService {
     }
 
     @Override
-    public List<JogosDto> listarTodos() {
+    public List<JogosDTO> listarTodos() {
         return repository.findAll().stream()
-                .map(j -> new JogosDto(
+                .map(j -> new JogosDTO(
                         j.getId(), j.getNome(), j.getGenero(), j.getDescricao(),
                         j.getDataLancamento(), j.getDesenvolvedor(), j.getLinkJogo()))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public JogosDto buscarPorId(Long id) {
+    public JogosDTO buscarPorId(Long id) {
         Jogos jogo = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Jogo não encontrado"));
-        return new JogosDto(
+        return new JogosDTO(
                 jogo.getId(), jogo.getNome(), jogo.getGenero(), jogo.getDescricao(),
                 jogo.getDataLancamento(), jogo.getDesenvolvedor(), jogo.getLinkJogo()
         );

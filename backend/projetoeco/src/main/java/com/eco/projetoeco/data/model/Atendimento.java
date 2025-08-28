@@ -1,6 +1,7 @@
 package com.eco.projetoeco.data.model;
 
 
+import com.eco.projetoeco.data.model.enuns.StatusAtendimento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

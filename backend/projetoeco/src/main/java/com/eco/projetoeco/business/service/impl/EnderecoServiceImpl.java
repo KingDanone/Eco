@@ -1,7 +1,6 @@
 package com.eco.projetoeco.business.service.impl;
 
-import com.eco.projetoeco.presentation.dto.EnderecoDto;
-import com.eco.projetoeco.presentation.dto.EnderecoRequestDto;
+import com.eco.projetoeco.presentation.dto.EnderecoDTO;
 import com.eco.projetoeco.data.model.Endereco;
 import com.eco.projetoeco.data.repository.EnderecoRepository;
 import com.eco.projetoeco.business.service.EnderecoService;
@@ -23,7 +22,7 @@ public class EnderecoServiceImpl implements EnderecoService {
 
     @Override
     @Transactional
-    public EnderecoDto criarEndereco(EnderecoRequestDto dto) {
+    public EnderecoDTO criarEndereco(EnderecoDTO dto) {
         Endereco endereco = new Endereco(
                 dto.getCep(),
                 dto.getEstado(),
@@ -35,16 +34,16 @@ public class EnderecoServiceImpl implements EnderecoService {
         );
 
         Endereco salvo = repository.save(endereco);
-        return new EnderecoDto(
+        return new EnderecoDTO(
                 salvo.getCep(), salvo.getEstado(), salvo.getCidade(),
                 salvo.getBairro(), salvo.getLogradouro()
         );
     }
 
     @Override
-    public List<EnderecoDto> listarTodos() {
+    public List<EnderecoDTO> listarTodos() {
         return repository.findAll().stream()
-                .map(e -> new EnderecoDto(
+                .map(e -> new EnderecoDTO(
                         e.getCep(), e.getEstado(), e.getCidade(),
                         e.getBairro(), e.getLogradouro()
                 ))

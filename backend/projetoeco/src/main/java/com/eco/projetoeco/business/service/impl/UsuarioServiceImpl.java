@@ -28,10 +28,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO autenticar(String identifier, String senha) {
-        Usuario usuario = repository.findByCpf(identifier);
-        if (usuario == null) {
-            usuario = repository.findByEmail(identifier);
-        }
+        Usuario usuario = repository.findByCpf(identifier)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         if (usuario == null || !usuario.getSenha().equals(senha)) {
             throw new RuntimeException("Usuário ou senha inválidos");
         }
@@ -45,10 +43,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO editar(String cpf, UsuarioDTO dto) {
-        Usuario usuario = repository.findByCpf(cpf);
-        if (usuario == null) {
-            throw new RuntimeException("Usuário não encontrado");
-        }
+        Usuario usuario = repository.findByCpf(cpf)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         usuario.setNome(dto.getNome());
         usuario.setNickname(dto.getNickname());
@@ -65,11 +61,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void alterarSenha(String cpf, UsuarioSenhaDTO dto) {
-        Usuario usuario = repository.findByCpf(cpf);
-        if (usuario == null) {
-            throw new RuntimeException("Usuário não encontrado");
-        }
-
+        Usuario usuario = repository.findByCpf(cpf)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         if (!usuario.getSenha().equals(dto.getCurrentPassword())) {
             throw new RuntimeException("Senha atual incorreta");
         }
@@ -80,10 +73,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO buscarPorCpf(String cpf) {
-        Usuario usuario = repository.findByCpf(cpf);
-        if (usuario == null) {
-            throw new RuntimeException("Usuário não encontrado");
-        }
+        Usuario usuario = repository.findByCpf(cpf)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         return parseObject(usuario, UsuarioDTO.class);
     }
 }

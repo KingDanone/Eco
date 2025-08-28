@@ -2,6 +2,7 @@ package com.eco.projetoeco.data.model;
 
 
 import com.eco.projetoeco.business.converter.NivelAvaliacaoConverter;
+import com.eco.projetoeco.data.model.enuns.NivelAvaliacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

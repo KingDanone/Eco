@@ -1,12 +1,11 @@
 package com.eco.projetoeco.business.service;
 
-import com.eco.projetoeco.presentation.dto.AvaliacaoDto;
-import com.eco.projetoeco.presentation.dto.AvaliacaoRequestDto;
+import com.eco.projetoeco.presentation.dto.AvaliacaoDTO;
 
 import java.util.List;
 
 public interface AvaliacaoService {
-    AvaliacaoDto criar(AvaliacaoRequestDto dto);
-    List<AvaliacaoDto> listarTodos();
+    AvaliacaoDTO criar(AvaliacaoDTO dto);
+    List<AvaliacaoDTO> listarTodos();
     void deletar(Long id);
 }

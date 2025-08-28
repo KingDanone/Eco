@@ -1,8 +1,7 @@
 package com.eco.projetoeco.presentation.controller;
 
 
-import com.eco.projetoeco.presentation.dto.DenunciaDto;
-import com.eco.projetoeco.presentation.dto.DenunciaRequestDto;
+import com.eco.projetoeco.presentation.dto.DenunciaDTO;
 import com.eco.projetoeco.business.service.DenunciaService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -20,19 +19,19 @@ public class DenunciaController {
     public DenunciaController(DenunciaService denunciaService) {this.denunciaService = denunciaService;}
 
     @PostMapping
-    public ResponseEntity<DenunciaDto> criar(
-            @RequestBody @Valid DenunciaRequestDto requestDto){
-        DenunciaDto criada = denunciaService.criarDenuncia(requestDto);
+    public ResponseEntity<DenunciaDTO> criar(
+            @RequestBody @Valid DenunciaDTO dto){
+        DenunciaDTO criada = denunciaService.criarDenuncia(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(criada);
     }
 
     @GetMapping
-    public ResponseEntity<List<DenunciaDto>> listar(){
+    public ResponseEntity<List<DenunciaDTO>> listar(){
         return ResponseEntity.ok(denunciaService.listarTodas());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<DenunciaDto> buscarPorId(@PathVariable Long id){
+    public ResponseEntity<DenunciaDTO> buscarPorId(@PathVariable Long id){
         return denunciaService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

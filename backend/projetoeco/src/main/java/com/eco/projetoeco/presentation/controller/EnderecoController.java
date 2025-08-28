@@ -1,7 +1,6 @@
 package com.eco.projetoeco.presentation.controller;
 
-import com.eco.projetoeco.presentation.dto.EnderecoDto;
-import com.eco.projetoeco.presentation.dto.EnderecoRequestDto;
+import com.eco.projetoeco.presentation.dto.EnderecoDTO;
 import com.eco.projetoeco.business.service.EnderecoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,13 +20,13 @@ public class EnderecoController {
     }
 
     @PostMapping
-    public ResponseEntity<EnderecoDto> criar(@RequestBody @Valid EnderecoRequestDto dto) {
-        EnderecoDto criado = service.criarEndereco(dto);
+    public ResponseEntity<EnderecoDTO> criar(@RequestBody @Valid EnderecoDTO dto) {
+        EnderecoDTO criado = service.criarEndereco(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(criado);
     }
 
     @GetMapping
-    public ResponseEntity<List<EnderecoDto>> listarTodos() {
+    public ResponseEntity<List<EnderecoDTO>> listarTodos() {
         return ResponseEntity.ok(service.listarTodos());
     }
 

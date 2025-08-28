@@ -1,8 +1,8 @@
 package com.eco.projetoeco.business.service.impl;
 
-import com.eco.projetoeco.presentation.dto.DenunciaDto;
-import com.eco.projetoeco.presentation.dto.DenunciaRequestDto;
-import com.eco.projetoeco.presentation.dto.EnderecoResumoDto;
+import com.eco.projetoeco.presentation.dto.DenunciaDTO;
+import com.eco.projetoeco.presentation.dto.EnderecoDTO;
+import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import com.eco.projetoeco.data.model.Denuncia;
 import com.eco.projetoeco.data.model.Endereco;
 import com.eco.projetoeco.data.model.Usuario;
@@ -34,15 +34,13 @@ public class DenunciaServiceImpl implements DenunciaService {
 
     @Override
     @Transactional
-    public DenunciaDto criarDenuncia(DenunciaRequestDto request) {
-
+    public DenunciaDTO criarDenuncia(DenunciaDTO request) {
         // Buscar usuário e endereço
-        Usuario usuario = usuarioRepository.findById(request.getUsuarioCpf())
+        Usuario usuario = usuarioRepository.findByCpf(request.getUsuario().getCpf())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        Endereco endereco = enderecoRepository.findById(request.getEnderecoCep())
+        Endereco endereco = enderecoRepository.findById(request.getEndereco().getCep())
                 .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
 
-        // Criar denúncia
         Denuncia denuncia = new Denuncia();
         denuncia.setTitulo(request.getTitulo());
         denuncia.setDescricao(request.getDescricao());
@@ -52,15 +50,9 @@ public class DenunciaServiceImpl implements DenunciaService {
         Denuncia salva = repository.save(denuncia);
 
         // Converter para DTO
-        UsuarioResumoDto usuarioDto = new UsuarioResumoDto(
-                usuario.getCpf(),
-                usuario.getNome(),
-                usuario.getNickname(),
-                usuario.getEmail(),
-                usuario.getTelefone()
-        );
+        UsuarioDTO usuarioDto = com.eco.projetoeco.business.mapper.ObjectMapper.parseObject(usuario, UsuarioDTO.class);
 
-        EnderecoResumoDto enderecoDto = new EnderecoResumoDto(
+        EnderecoDTO enderecoDto = new EnderecoDTO(
                 endereco.getCep(),
                 endereco.getEstado(),
                 endereco.getCidade(),
@@ -68,7 +60,7 @@ public class DenunciaServiceImpl implements DenunciaService {
                 endereco.getLogradouro()
         );
 
-        DenunciaDto dto = new DenunciaDto(
+        return new DenunciaDTO(
                 salva.getId(),
                 salva.getTitulo(),
                 salva.getDescricao(),
@@ -77,34 +69,21 @@ public class DenunciaServiceImpl implements DenunciaService {
                 usuarioDto,
                 enderecoDto
         );
-
-
-        return new DenunciaDto(
-                salva.getId(),
-                salva.getTitulo(),
-                salva.getDescricao(),
-                salva.getDataCriacao(),
-                salva.getDataAtualizacao(),
-                usuarioDto,
-                enderecoDto // ← ✅ Aqui usamos o DTO simplificado
-        );
     }
 
     @Override
-    public List<DenunciaDto> listarTodas() {
+    public List<DenunciaDTO> listarTodas() {
         return repository.findAll().stream()
                 .map(d -> {
                     Usuario u = d.getUsuario();
-                    UsuarioResumoDto usuarioDto = new UsuarioResumoDto(
-                            u.getCpf(), u.getNome(), u.getNickname(), u.getEmail(), u.getTelefone()
-                    );
+                    UsuarioDTO usuarioDto = com.eco.projetoeco.business.mapper.ObjectMapper.parseObject(u, UsuarioDTO.class);
 
                     Endereco e = d.getEndereco();
-                    EnderecoResumoDto enderecoDto = new EnderecoResumoDto(
+                    EnderecoDTO enderecoDto = new EnderecoDTO(
                             e.getCep(), e.getEstado(), e.getCidade(), e.getBairro(), e.getLogradouro()
                     );
 
-                    return new DenunciaDto(
+                    return new DenunciaDTO(
                             d.getId(), d.getTitulo(), d.getDescricao(),
                             d.getDataCriacao(), d.getDataAtualizacao(),
                             usuarioDto,
@@ -115,20 +94,18 @@ public class DenunciaServiceImpl implements DenunciaService {
     }
 
     @Override
-    public Optional<DenunciaDto> buscarPorId(Long id) {
+    public Optional<DenunciaDTO> buscarPorId(Long id) {
         return repository.findById(id)
                 .map(d -> {
                     Usuario u = d.getUsuario();
-                    UsuarioResumoDto usuarioDto = new UsuarioResumoDto(
-                            u.getCpf(), u.getNome(), u.getNickname(), u.getEmail(), u.getTelefone()
-                    );
+                    UsuarioDTO usuarioDto = com.eco.projetoeco.business.mapper.ObjectMapper.parseObject(u, UsuarioDTO.class);
 
                     Endereco e = d.getEndereco();
-                    EnderecoResumoDto enderecoDto = new EnderecoResumoDto(
+                    EnderecoDTO enderecoDto = new EnderecoDTO(
                             e.getCep(), e.getEstado(), e.getCidade(), e.getBairro(), e.getLogradouro()
                     );
 
-                    return new DenunciaDto(
+                    return new DenunciaDTO(
                             d.getId(), d.getTitulo(), d.getDescricao(),
                             d.getDataCriacao(), d.getDataAtualizacao(),
                             usuarioDto,

@@ -1,4 +1,4 @@
-package com.eco.projetoeco.data.model;
+package com.eco.projetoeco.data.model.enuns;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
