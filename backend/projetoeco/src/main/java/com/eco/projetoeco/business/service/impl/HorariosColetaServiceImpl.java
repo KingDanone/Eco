@@ -27,7 +27,7 @@ public class HorariosColetaServiceImpl implements HorariosColetaService {
     @Override
     @Transactional
     public HorariosColetaDTO criar(HorariosColetaDTO request) {
-        Endereco endereco = enderecoRepository.findById(request.getEnderecoCep())
+        Endereco endereco = enderecoRepository.findByCep(request.getEnderecoCep())
                 .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
 
         HorariosColeta coleta = new HorariosColeta();

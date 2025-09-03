@@ -19,11 +19,7 @@ public class EnderecoController {
         this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity<EnderecoDTO> criar(@RequestBody @Valid EnderecoDTO dto) {
-        EnderecoDTO criado = service.criarEndereco(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(criado);
-    }
+    // Desabilitado: Endereços são criados apenas no fluxo de denúncia
 
     @GetMapping
     public ResponseEntity<List<EnderecoDTO>> listarTodos() {

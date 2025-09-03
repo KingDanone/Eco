@@ -12,10 +12,12 @@ import com.eco.projetoeco.data.repository.UsuarioRepository;
 import com.eco.projetoeco.business.service.DenunciaService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import static com.eco.projetoeco.business.mapper.ObjectMapper.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 @Service
 public class DenunciaServiceImpl implements DenunciaService {
@@ -35,12 +37,24 @@ public class DenunciaServiceImpl implements DenunciaService {
     @Override
     @Transactional
     public DenunciaDTO criarDenuncia(DenunciaDTO request) {
-        // Buscar usuário e endereço
+        // Buscar usuário por CPF
         Usuario usuario = usuarioRepository.findByCpf(request.getUsuario().getCpf())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        Endereco endereco = enderecoRepository.findById(request.getEndereco().getCep())
-                .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
 
+        // Criar novo endereço a partir do DTO e persistir
+        Endereco novoEndereco = new Endereco(
+                null, // id será gerado automaticamente
+                request.getEndereco().getCep(),
+                request.getEndereco().getEstado(),
+                request.getEndereco().getCidade(),
+                request.getEndereco().getBairro(),
+                request.getEndereco().getLogradouro(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
+        Endereco endereco = enderecoRepository.save(novoEndereco);
+
+        // Criar denúncia vinculada ao usuário e ao novo endereço
         Denuncia denuncia = new Denuncia();
         denuncia.setTitulo(request.getTitulo());
         denuncia.setDescricao(request.getDescricao());
@@ -50,9 +64,10 @@ public class DenunciaServiceImpl implements DenunciaService {
         Denuncia salva = repository.save(denuncia);
 
         // Converter para DTO
-        UsuarioDTO usuarioDto = com.eco.projetoeco.business.mapper.ObjectMapper.parseObject(usuario, UsuarioDTO.class);
+        UsuarioDTO usuarioDto = parseObject(usuario, UsuarioDTO.class);
 
         EnderecoDTO enderecoDto = new EnderecoDTO(
+                endereco.getId(),
                 endereco.getCep(),
                 endereco.getEstado(),
                 endereco.getCidade(),
@@ -76,10 +91,11 @@ public class DenunciaServiceImpl implements DenunciaService {
         return repository.findAll().stream()
                 .map(d -> {
                     Usuario u = d.getUsuario();
-                    UsuarioDTO usuarioDto = com.eco.projetoeco.business.mapper.ObjectMapper.parseObject(u, UsuarioDTO.class);
+                    UsuarioDTO usuarioDto = parseObject(u, UsuarioDTO.class);
 
                     Endereco e = d.getEndereco();
                     EnderecoDTO enderecoDto = new EnderecoDTO(
+                            e.getId(),
                             e.getCep(), e.getEstado(), e.getCidade(), e.getBairro(), e.getLogradouro()
                     );
 
@@ -98,10 +114,11 @@ public class DenunciaServiceImpl implements DenunciaService {
         return repository.findById(id)
                 .map(d -> {
                     Usuario u = d.getUsuario();
-                    UsuarioDTO usuarioDto = com.eco.projetoeco.business.mapper.ObjectMapper.parseObject(u, UsuarioDTO.class);
+                    UsuarioDTO usuarioDto = parseObject(u, UsuarioDTO.class);
 
                     Endereco e = d.getEndereco();
                     EnderecoDTO enderecoDto = new EnderecoDTO(
+                            e.getId(),
                             e.getCep(), e.getEstado(), e.getCidade(), e.getBairro(), e.getLogradouro()
                     );
 

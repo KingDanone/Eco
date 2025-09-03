@@ -24,6 +24,7 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Transactional
     public EnderecoDTO criarEndereco(EnderecoDTO dto) {
         Endereco endereco = new Endereco(
+                null, // id será gerado automaticamente
                 dto.getCep(),
                 dto.getEstado(),
                 dto.getCidade(),
@@ -35,6 +36,7 @@ public class EnderecoServiceImpl implements EnderecoService {
 
         Endereco salvo = repository.save(endereco);
         return new EnderecoDTO(
+                salvo.getId(),
                 salvo.getCep(), salvo.getEstado(), salvo.getCidade(),
                 salvo.getBairro(), salvo.getLogradouro()
         );
@@ -44,6 +46,7 @@ public class EnderecoServiceImpl implements EnderecoService {
     public List<EnderecoDTO> listarTodos() {
         return repository.findAll().stream()
                 .map(e -> new EnderecoDTO(
+                        e.getId(),
                         e.getCep(), e.getEstado(), e.getCidade(),
                         e.getBairro(), e.getLogradouro()
                 ))
@@ -53,9 +56,9 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Override
     @Transactional
     public void deletarPorCep(String cep) {
-        if (!repository.existsById(cep)) {
+        if (!repository.existsByCep(cep)) {
             throw new RuntimeException("Endereço não encontrado para o CEP: " + cep);
         }
-        repository.deleteById(cep);
+        repository.deleteByCep(cep);
     }
 }

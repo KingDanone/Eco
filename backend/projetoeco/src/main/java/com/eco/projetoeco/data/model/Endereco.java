@@ -17,7 +17,11 @@ import java.util.List;
 public class Endereco {
 
     @Id
-    @Column(name = "cep", length = 8)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "cep", length = 8, nullable = false)
     private String cep;
 
     @Column(name = "estado", nullable = false, length = 45)

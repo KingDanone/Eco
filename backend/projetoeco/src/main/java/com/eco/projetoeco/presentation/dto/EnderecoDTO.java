@@ -24,6 +24,9 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EnderecoDTO {
 
+    @Schema(description = "Identificador do endereço", accessMode = Schema.AccessMode.READ_ONLY)
+    private Long id;
+
     @Schema(description = "CEP do endereço (8 dígitos)", example = "65000000")
     @NotBlank(message = "CEP é obrigatório")
     @Pattern(regexp = "\\d{8}", message = "CEP deve ter 8 dígitos numéricos")
