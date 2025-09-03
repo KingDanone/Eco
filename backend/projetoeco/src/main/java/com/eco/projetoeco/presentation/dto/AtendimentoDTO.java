@@ -14,6 +14,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,11 +36,10 @@ public class AtendimentoDTO {
     @Schema(description = "Status do atendimento")
     private StatusAtendimento status;
 
-    @Schema(description = "Usuário do atendimento")
-    @NotNull(message = "Usuário é obrigatório")
-    private UsuarioDTO usuario;
-
     @Schema(description = "Denúncia vinculada")
     @NotNull(message = "Denúncia é obrigatória")
     private DenunciaDTO denuncia;
+
+    @Schema(description = "Respostas associadas ao atendimento")
+    private List<RespostaDTO> respostas;
 }

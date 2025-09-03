@@ -74,9 +74,7 @@ public class AtendimentoServiceImpl implements AtendimentoService {
     @Override
     public List<AtendimentoDTO> listarTodos() {
         return atendimentoRepository.findAll().stream().map(atendimento -> {
-            Usuario usuario = atendimento.getUsuario();
             Denuncia denuncia = atendimento.getDenuncia();
-
             return new AtendimentoDTO(
                     atendimento.getProtocolo(),
                     atendimento.getDataAtendimento(),

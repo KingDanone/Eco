@@ -31,14 +31,15 @@ public class Atendimento {
     private StatusAtendimento status = StatusAtendimento.ABERTO;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "denuncia_id", nullable = false)
     private Denuncia denuncia;
 
     @OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL,
             orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Resposta> respostas = new ArrayList<>();
+
+    public void adicionarResposta(Resposta resposta) {
+        respostas.add(resposta);
+        resposta.setAtendimento(this);
+    }
 }
