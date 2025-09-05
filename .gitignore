@@ -2,3 +2,5 @@ apis/venv/
 apis/.vscode/
 apis/.env
 apis/__pycache__/
+.idea/
+backend/.idea/
