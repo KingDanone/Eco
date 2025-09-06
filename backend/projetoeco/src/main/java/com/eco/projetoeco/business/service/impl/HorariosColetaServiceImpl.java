@@ -1,5 +1,6 @@
 package com.eco.projetoeco.business.service.impl;
 
+import com.eco.projetoeco.business.mapper.HorariosColetaMapper;
 import com.eco.projetoeco.presentation.dto.HorariosColetaDTO;
 import com.eco.projetoeco.data.model.Endereco;
 import com.eco.projetoeco.data.model.HorariosColeta;
@@ -11,17 +12,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class HorariosColetaServiceImpl implements HorariosColetaService {
 
     private final HorariosColetaRepository repository;
     private final EnderecoRepository enderecoRepository;
+    private final HorariosColetaMapper mapper;
 
-    public HorariosColetaServiceImpl(HorariosColetaRepository repository, EnderecoRepository enderecoRepository) {
+    public HorariosColetaServiceImpl(HorariosColetaRepository repository,
+                                     EnderecoRepository enderecoRepository,
+                                     HorariosColetaMapper mapper) {
         this.repository = repository;
         this.enderecoRepository = enderecoRepository;
+        this.mapper = mapper;
     }
 
     @Override
@@ -30,30 +34,23 @@ public class HorariosColetaServiceImpl implements HorariosColetaService {
         Endereco endereco = enderecoRepository.findByCep(request.getEnderecoCep())
                 .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
 
-        HorariosColeta coleta = new HorariosColeta();
-        coleta.setDiaSemana(request.getDiaSemana());
-        coleta.setTurno(request.getTurno());
+        HorariosColeta coleta = mapper.toEntity(request);
         coleta.setEndereco(endereco);
 
         HorariosColeta salvo = repository.save(coleta);
 
-        return new HorariosColetaDTO(salvo.getId(), salvo.getDiaSemana(), salvo.getTurno(), salvo.getEndereco().getCep());
+        return mapper.toDTO(salvo);
     }
 
     @Override
     public List<HorariosColetaDTO> listarTodos() {
-        return repository.findAll().stream()
-                .map(h -> new HorariosColetaDTO(
-                        h.getId(), h.getDiaSemana(), h.getTurno(), h.getEndereco().getCep()
-                )).collect(Collectors.toList());
+        return mapper.toDTO(repository.findAll());
     }
 
     @Override
     public Optional<HorariosColetaDTO> buscarPorId(Long id) {
         return repository.findById(id)
-                .map(h -> new HorariosColetaDTO(
-                        h.getId(), h.getDiaSemana(), h.getTurno(), h.getEndereco().getCep()
-                ));
+                .map(mapper::toDTO);
     }
 
     @Override

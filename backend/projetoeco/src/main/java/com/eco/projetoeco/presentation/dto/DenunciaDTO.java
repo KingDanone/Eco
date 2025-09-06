@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @ToString
@@ -45,8 +45,10 @@ public class DenunciaDTO {
     private LocalDateTime dataAtualizacao;
 
     @Schema(description = "Usuário autor da denúncia")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private UsuarioDTO usuario;
 
     @Schema(description = "Endereço relacionado à denúncia")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private EnderecoDTO endereco;
 }
