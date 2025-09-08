@@ -36,10 +36,11 @@ public class AtendimentoDTO {
     @Schema(description = "Status do atendimento")
     private StatusAtendimento status;
 
-    @Schema(description = "Denúncia vinculada")
-    @NotNull(message = "Denúncia é obrigatória")
+    @Schema(description = "ID da denúncia a ser vinculada. Usado para criar um novo atendimento.", example = "1")
+    @NotNull(message = "ID da Denúncia é obrigatório")
+    private Long denunciaId;
+
+    @Schema(description = "Denúncia vinculada", accessMode = Schema.AccessMode.READ_ONLY)
     private DenunciaDTO denuncia;
 
-    @Schema(description = "Respostas associadas ao atendimento")
-    private List<RespostaDTO> respostas;
-}
+    }

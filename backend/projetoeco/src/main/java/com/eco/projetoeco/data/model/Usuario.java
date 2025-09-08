@@ -20,15 +20,13 @@ import java.util.List;
         @UniqueConstraint(columnNames = {"email"}),
         @UniqueConstraint(columnNames = {"cpf"})
 })
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ToString
-public abstract class Usuario {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

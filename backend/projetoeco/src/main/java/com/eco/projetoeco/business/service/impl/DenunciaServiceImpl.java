@@ -1,8 +1,8 @@
 package com.eco.projetoeco.business.service.impl;
 
+import com.eco.projetoeco.business.mapper.DenunciaMapper;
+import com.eco.projetoeco.business.mapper.EnderecoMapper;
 import com.eco.projetoeco.presentation.dto.DenunciaDTO;
-import com.eco.projetoeco.presentation.dto.EnderecoDTO;
-import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import com.eco.projetoeco.data.model.Denuncia;
 import com.eco.projetoeco.data.model.Endereco;
 import com.eco.projetoeco.data.model.Usuario;
@@ -10,14 +10,12 @@ import com.eco.projetoeco.data.repository.DenunciaRepository;
 import com.eco.projetoeco.data.repository.EnderecoRepository;
 import com.eco.projetoeco.data.repository.UsuarioRepository;
 import com.eco.projetoeco.business.service.DenunciaService;
+import com.eco.projetoeco.presentation.dto.UpdateDenunciaStatusDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import static com.eco.projetoeco.business.mapper.ObjectMapper.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.ArrayList;
 
 @Service
 public class DenunciaServiceImpl implements DenunciaService {
@@ -25,109 +23,65 @@ public class DenunciaServiceImpl implements DenunciaService {
     private final DenunciaRepository repository;
     private final UsuarioRepository usuarioRepository;
     private final EnderecoRepository enderecoRepository;
+    private final DenunciaMapper denunciaMapper;
+    private final EnderecoMapper enderecoMapper;
 
     public DenunciaServiceImpl(DenunciaRepository repository,
                                UsuarioRepository usuarioRepository,
-                               EnderecoRepository enderecoRepository) {
+                               EnderecoRepository enderecoRepository,
+                               DenunciaMapper denunciaMapper,
+                               EnderecoMapper enderecoMapper) {
         this.repository = repository;
         this.usuarioRepository = usuarioRepository;
         this.enderecoRepository = enderecoRepository;
+        this.denunciaMapper = denunciaMapper;
+        this.enderecoMapper = enderecoMapper;
     }
 
     @Override
     @Transactional
     public DenunciaDTO criarDenuncia(DenunciaDTO request) {
-        // Buscar usuário por CPF
-        Usuario usuario = usuarioRepository.findByCpf(request.getUsuario().getCpf())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        // Buscar Usuario pelo ID fornecido no DTO
+        Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
+                .orElseThrow(() -> new RuntimeException("Usuário com id " + request.getUsuarioId() + " não encontrado"));
 
-        // Criar novo endereço a partir do DTO e persistir
-        Endereco novoEndereco = new Endereco(
-                null, // id será gerado automaticamente
-                request.getEndereco().getCep(),
-                request.getEndereco().getEstado(),
-                request.getEndereco().getCidade(),
-                request.getEndereco().getBairro(),
-                request.getEndereco().getLogradouro(),
-                new ArrayList<>(),
-                new ArrayList<>()
-        );
-        Endereco endereco = enderecoRepository.save(novoEndereco);
+        // Mapear, salvar e associar o novo Endereco
+        Endereco endereco = enderecoMapper.toEntity(request.getEndereco());
+        Endereco enderecoSalvo = enderecoRepository.save(endereco);
 
-        // Criar denúncia vinculada ao usuário e ao novo endereço
-        Denuncia denuncia = new Denuncia();
-        denuncia.setTitulo(request.getTitulo());
-        denuncia.setDescricao(request.getDescricao());
+        // Mapear o DTO para a entidade Denuncia
+        Denuncia denuncia = denunciaMapper.toEntity(request);
         denuncia.setUsuario(usuario);
-        denuncia.setEndereco(endereco);
+        denuncia.setEndereco(enderecoSalvo);
 
+        // Salvar a nova denuncia
         Denuncia salva = repository.save(denuncia);
 
-        // Converter para DTO
-        UsuarioDTO usuarioDto = parseObject(usuario, UsuarioDTO.class);
-
-        EnderecoDTO enderecoDto = new EnderecoDTO(
-                endereco.getId(),
-                endereco.getCep(),
-                endereco.getEstado(),
-                endereco.getCidade(),
-                endereco.getBairro(),
-                endereco.getLogradouro()
-        );
-
-        return new DenunciaDTO(
-                salva.getId(),
-                salva.getTitulo(),
-                salva.getDescricao(),
-                salva.getDataCriacao(),
-                salva.getDataAtualizacao(),
-                usuarioDto,
-                enderecoDto
-        );
+        // Retornar o DTO da denuncia salva
+        return denunciaMapper.toDTO(salva);
     }
 
     @Override
     public List<DenunciaDTO> listarTodas() {
-        return repository.findAll().stream()
-                .map(d -> {
-                    Usuario u = d.getUsuario();
-                    UsuarioDTO usuarioDto = parseObject(u, UsuarioDTO.class);
-
-                    Endereco e = d.getEndereco();
-                    EnderecoDTO enderecoDto = new EnderecoDTO(
-                            e.getId(),
-                            e.getCep(), e.getEstado(), e.getCidade(), e.getBairro(), e.getLogradouro()
-                    );
-
-                    return new DenunciaDTO(
-                            d.getId(), d.getTitulo(), d.getDescricao(),
-                            d.getDataCriacao(), d.getDataAtualizacao(),
-                            usuarioDto,
-                            enderecoDto
-                    );
-                })
-                .collect(Collectors.toList());
+        return denunciaMapper.toDTO(repository.findAllWithAssociations());
     }
 
     @Override
     public Optional<DenunciaDTO> buscarPorId(Long id) {
         return repository.findById(id)
-                .map(d -> {
-                    Usuario u = d.getUsuario();
-                    UsuarioDTO usuarioDto = parseObject(u, UsuarioDTO.class);
+                .map(denunciaMapper::toDTO);
+    }
 
-                    Endereco e = d.getEndereco();
-                    EnderecoDTO enderecoDto = new EnderecoDTO(
-                            e.getId(),
-                            e.getCep(), e.getEstado(), e.getCidade(), e.getBairro(), e.getLogradouro()
-                    );
+    @Override
+    @Transactional
+    public DenunciaDTO atualizarStatus(Long id, UpdateDenunciaStatusDTO statusDTO) {
+        Denuncia denuncia = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Denúncia com id " + id + " não encontrada."));
 
-                    return new DenunciaDTO(
-                            d.getId(), d.getTitulo(), d.getDescricao(),
-                            d.getDataCriacao(), d.getDataAtualizacao(),
-                            usuarioDto,
-                            enderecoDto
-                    );
-                });
+        denuncia.setStatus(statusDTO.getStatus());
+
+        Denuncia salva = repository.save(denuncia);
+
+        return denunciaMapper.toDTO(salva);
     }
 }

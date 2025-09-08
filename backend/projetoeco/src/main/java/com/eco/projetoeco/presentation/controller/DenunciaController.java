@@ -6,6 +6,8 @@ import com.eco.projetoeco.business.service.DenunciaService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import com.eco.projetoeco.presentation.dto.UpdateDenunciaStatusDTO;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,5 +37,13 @@ public class DenunciaController {
         return denunciaService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<DenunciaDTO> atualizarStatus(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateDenunciaStatusDTO statusDTO) {
+        DenunciaDTO atualizada = denunciaService.atualizarStatus(id, statusDTO);
+        return ResponseEntity.ok(atualizada);
     }
 }

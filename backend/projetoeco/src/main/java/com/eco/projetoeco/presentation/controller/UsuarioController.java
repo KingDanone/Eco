@@ -20,16 +20,6 @@ public class UsuarioController {
         this.service = service;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<UsuarioDTO> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
-        try {
-            UsuarioDTO usuario = service.autenticar(loginRequest.getIdentifier(), loginRequest.getSenha());
-            return ResponseEntity.ok(usuario);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-    }
-
     @PostMapping
     public ResponseEntity<UsuarioDTO> criar(@Valid @RequestBody UsuarioDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criar(dto));

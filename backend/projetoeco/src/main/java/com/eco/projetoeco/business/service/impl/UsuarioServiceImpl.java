@@ -1,14 +1,12 @@
 package com.eco.projetoeco.business.service.impl;
 
+import com.eco.projetoeco.business.mapper.UsuarioMapper;
 import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import com.eco.projetoeco.presentation.dto.UsuarioSenhaDTO;
 import com.eco.projetoeco.data.model.Usuario;
-import com.eco.projetoeco.data.model.UsuarioComum;
 import com.eco.projetoeco.data.repository.UsuarioRepository;
 import com.eco.projetoeco.business.service.UsuarioService;
 import org.springframework.stereotype.Service;
-import static com.eco.projetoeco.business.mapper.ObjectMapper.parseObject;
-import static com.eco.projetoeco.business.mapper.ObjectMapper.parseListObjects;
 
 import java.util.List;
 
@@ -16,29 +14,24 @@ import java.util.List;
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository repository;
-    public UsuarioServiceImpl(UsuarioRepository repository) {this.repository = repository;}
+    private final UsuarioMapper mapper;
+
+    public UsuarioServiceImpl(UsuarioRepository repository, UsuarioMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
 
     @Override
     public UsuarioDTO criar(UsuarioDTO dto) {
-        UsuarioComum usuario = parseObject(dto, UsuarioComum.class);
+        Usuario usuario = mapper.toEntity(dto);
         Usuario salvo = repository.save(usuario);
-        return parseObject(salvo, UsuarioDTO.class);
-    }
-
-    @Override
-    public UsuarioDTO autenticar(String identifier, String senha) {
-        Usuario usuario = repository.findByCpf(identifier)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        if (usuario == null || !usuario.getSenha().equals(senha)) {
-            throw new RuntimeException("Usuário ou senha inválidos");
-        }
-        return parseObject(usuario, UsuarioDTO.class);
+        return mapper.toDTO(salvo);
     }
 
     @Override
     public List<UsuarioDTO> listarTodos() {
-        return parseListObjects(repository.findAll(), UsuarioDTO.class);
+        return mapper.toDTO(repository.findAll());
     }
 
     @Override
@@ -56,7 +49,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
 
         Usuario atualizado = repository.save(usuario);
-        return parseObject(atualizado, UsuarioDTO.class);
+        return mapper.toDTO(atualizado);
     }
 
     @Override
@@ -75,6 +68,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioDTO buscarPorCpf(String cpf) {
         Usuario usuario = repository.findByCpf(cpf)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        return parseObject(usuario, UsuarioDTO.class);
+        return mapper.toDTO(usuario);
     }
 }
