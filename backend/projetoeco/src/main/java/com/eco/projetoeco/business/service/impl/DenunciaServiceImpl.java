@@ -10,6 +10,7 @@ import com.eco.projetoeco.data.repository.DenunciaRepository;
 import com.eco.projetoeco.data.repository.EnderecoRepository;
 import com.eco.projetoeco.data.repository.UsuarioRepository;
 import com.eco.projetoeco.business.service.DenunciaService;
+import com.eco.projetoeco.presentation.dto.UpdateDenunciaStatusDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -40,19 +41,23 @@ public class DenunciaServiceImpl implements DenunciaService {
     @Override
     @Transactional
     public DenunciaDTO criarDenuncia(DenunciaDTO request) {
-        Usuario usuario = usuarioRepository.findByCpf(request.getUsuario().getCpf())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        // Buscar Usuario pelo ID fornecido no DTO
+        Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
+                .orElseThrow(() -> new RuntimeException("Usuário com id " + request.getUsuarioId() + " não encontrado"));
 
+        // Mapear, salvar e associar o novo Endereco
         Endereco endereco = enderecoMapper.toEntity(request.getEndereco());
         Endereco enderecoSalvo = enderecoRepository.save(endereco);
 
+        // Mapear o DTO para a entidade Denuncia
         Denuncia denuncia = denunciaMapper.toEntity(request);
         denuncia.setUsuario(usuario);
         denuncia.setEndereco(enderecoSalvo);
 
-
+        // Salvar a nova denuncia
         Denuncia salva = repository.save(denuncia);
 
+        // Retornar o DTO da denuncia salva
         return denunciaMapper.toDTO(salva);
     }
 
@@ -65,5 +70,18 @@ public class DenunciaServiceImpl implements DenunciaService {
     public Optional<DenunciaDTO> buscarPorId(Long id) {
         return repository.findById(id)
                 .map(denunciaMapper::toDTO);
+    }
+
+    @Override
+    @Transactional
+    public DenunciaDTO atualizarStatus(Long id, UpdateDenunciaStatusDTO statusDTO) {
+        Denuncia denuncia = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Denúncia com id " + id + " não encontrada."));
+
+        denuncia.setStatus(statusDTO.getStatus());
+
+        Denuncia salva = repository.save(denuncia);
+
+        return denunciaMapper.toDTO(salva);
     }
 }

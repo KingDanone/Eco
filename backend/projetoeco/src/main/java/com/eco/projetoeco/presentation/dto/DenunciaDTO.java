@@ -14,6 +14,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -44,11 +45,17 @@ public class DenunciaDTO {
     @Schema(description = "Data de atualização", accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime dataAtualizacao;
 
-    @Schema(description = "Usuário autor da denúncia")
+    @Schema(description = "ID do usuário autor da denúncia. Usado para criar uma nova denúncia.", example = "1")
+    private Long usuarioId;
+
+    @Schema(description = "Usuário autor da denúncia", accessMode = Schema.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private UsuarioDTO usuario;
 
     @Schema(description = "Endereço relacionado à denúncia")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private EnderecoDTO endereco;
+
+    @Schema(description = "Respostas associadas à denúncia", accessMode = Schema.AccessMode.READ_ONLY)
+    private List<RespostaDTO> respostas;
 }

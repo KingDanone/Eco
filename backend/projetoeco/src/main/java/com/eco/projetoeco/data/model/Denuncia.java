@@ -1,5 +1,6 @@
 package com.eco.projetoeco.data.model;
 
+import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,6 +28,10 @@ public class Denuncia {
     @Column(name = "descricao", nullable = false, columnDefinition = "TEXT")
     private String descricao;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private StatusDenuncia status = StatusDenuncia.ABERTA;
+
     @CreationTimestamp
     @Column(name = "data_criacao", updatable = false)
     private LocalDateTime dataCriacao;
@@ -46,4 +51,7 @@ public class Denuncia {
     @OneToMany(mappedBy = "denuncia", cascade = CascadeType.ALL,
                     orphanRemoval = true ,fetch = FetchType.LAZY)
     private List<Atendimento> atendimentos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "denuncia", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Resposta> respostas = new ArrayList<>();
 }

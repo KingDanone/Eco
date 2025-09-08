@@ -1,7 +1,6 @@
 package com.eco.projetoeco.business.mapper;
 
 import com.eco.projetoeco.data.model.Usuario;
-import com.eco.projetoeco.data.model.UsuarioComum;
 import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,7 +18,7 @@ public interface UsuarioMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "denuncias", ignore = true)
     @Mapping(target = "avaliacoes", ignore = true)
-    UsuarioComum toEntity(UsuarioDTO usuarioDTO);
+    Usuario toEntity(UsuarioDTO usuarioDTO);
 
     List<UsuarioDTO> toDTO(List<Usuario> usuarios);
 }

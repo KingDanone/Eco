@@ -13,11 +13,11 @@ public interface RespostaMapper {
 
     RespostaMapper INSTANCE = Mappers.getMapper(RespostaMapper.class);
 
-    @Mapping(source = "atendimento.protocolo", target = "atendimentoId")
+    @Mapping(source = "denuncia.id", target = "denunciaId")
     RespostaDTO toDTO(Resposta resposta);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "atendimento", ignore = true)
+    @Mapping(target = "denuncia", ignore = true)
     @Mapping(target = "dataResposta", ignore = true)
     Resposta toEntity(RespostaDTO respostaDTO);
 

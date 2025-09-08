@@ -24,8 +24,8 @@ public class Resposta {
     private String mensagem;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "atendimento_protocolo", nullable = false)
-    private Atendimento atendimento;
+    @JoinColumn(name = "denuncia_id", nullable = false)
+    private Denuncia denuncia;
 
     @CreationTimestamp // data_resposta TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
     @Column(name = "data_resposta", updatable = false)

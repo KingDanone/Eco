@@ -17,7 +17,6 @@ public interface AtendimentoMapper {
 
     @Mapping(target = "protocolo", ignore = true)
     @Mapping(target = "status", ignore = true)
-    @Mapping(target = "respostas", ignore = true)
     Atendimento toEntity(AtendimentoDTO atendimentoDTO);
 
     List<AtendimentoDTO> toDTO(List<Atendimento> atendimentos);

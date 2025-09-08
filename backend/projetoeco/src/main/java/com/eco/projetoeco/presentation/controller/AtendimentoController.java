@@ -1,10 +1,13 @@
 package com.eco.projetoeco.presentation.controller;
 
-import com.eco.projetoeco.presentation.dto.AtendimentoDTO;
+import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
 import com.eco.projetoeco.business.service.AtendimentoService;
-import jakarta.validation.Valid;
+import com.eco.projetoeco.presentation.dto.DenunciaDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -18,20 +21,8 @@ public class AtendimentoController {
         this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity<AtendimentoDTO> criar(@RequestBody @Valid AtendimentoDTO dto) {
-        return ResponseEntity.ok(service.criar(dto));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<AtendimentoDTO>> listar() {
-        return ResponseEntity.ok(service.listarTodos());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<AtendimentoDTO> buscar(@PathVariable Long id) {
-        return service.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @GetMapping("/denuncias")
+    public ResponseEntity<List<DenunciaDTO>> buscarDenuncias(@RequestParam(required = false) StatusDenuncia status) {
+        return ResponseEntity.ok(service.buscarDenuncias(status));
     }
 }

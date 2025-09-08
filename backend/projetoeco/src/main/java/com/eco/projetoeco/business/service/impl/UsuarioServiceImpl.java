@@ -4,7 +4,6 @@ import com.eco.projetoeco.business.mapper.UsuarioMapper;
 import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import com.eco.projetoeco.presentation.dto.UsuarioSenhaDTO;
 import com.eco.projetoeco.data.model.Usuario;
-import com.eco.projetoeco.data.model.UsuarioComum;
 import com.eco.projetoeco.data.repository.UsuarioRepository;
 import com.eco.projetoeco.business.service.UsuarioService;
 import org.springframework.stereotype.Service;
@@ -25,19 +24,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO criar(UsuarioDTO dto) {
-        UsuarioComum usuario = mapper.toEntity(dto);
+        Usuario usuario = mapper.toEntity(dto);
         Usuario salvo = repository.save(usuario);
         return mapper.toDTO(salvo);
-    }
-
-    @Override
-    public UsuarioDTO autenticar(String identifier, String senha) {
-        Usuario usuario = repository.findByCpf(identifier)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        if (usuario == null || !usuario.getSenha().equals(senha)) {
-            throw new RuntimeException("Usuário ou senha inválidos");
-        }
-        return mapper.toDTO(usuario);
     }
 
     @Override

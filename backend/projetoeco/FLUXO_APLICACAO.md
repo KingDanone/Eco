@@ -2,69 +2,52 @@
 
 Este documento descreve o fluxo principal da aplicação, detalhando os passos desde a criação de um usuário até a resposta de uma denúncia.
 
-## Fluxo Principal
+## Fluxo Principal Revisado
 
-O fluxo principal da aplicação consiste nos seguintes passos:
+O fluxo principal da aplicação foi otimizado para ser mais direto e centrado na entidade `Denuncia`.
 
-1.  **Criação de Usuário:** Um novo usuário (comum) é criado no sistema.
-2.  **Criação de Denúncia:** O usuário cria uma nova denúncia, fornecendo os detalhes da denúncia e o endereço da ocorrência.
-3.  **Listagem de Denúncias (Admin):** Um usuário administrador lista todas as denúncias para análise.
-4.  **Criação de Atendimento (Admin):** O administrador cria um atendimento para uma denúncia específica.
-5.  **Resposta à Denúncia (Admin):** O administrador responde à denúncia através do atendimento.
+1.  **Criação de Usuário:** Um novo usuário (comum ou admin) é criado no sistema.
+2.  **Criação de Denúncia:** Um usuário comum cria uma nova denúncia. O status da denúncia é automaticamente definido como `ABERTA`.
+3.  **Consulta de Denúncias (Admin):** Um usuário administrador consulta as denúncias, podendo filtrar por status (`ABERTA`, `EM_ANALISE`, `FECHADA`).
+4.  **Resposta à Denúncia (Admin):** O administrador responde diretamente a uma denúncia. Ao fazer isso, o status da denúncia é automaticamente alterado para `EM_ANALISE`.
+5.  **(Futuro) Fechamento de Denúncia (Admin):** O administrador poderá, futuramente, marcar uma denúncia como `FECHADA`.
 
 ## Detalhes do Fluxo e Status de Implementação
 
 ### 1. Criação de Usuário
 
 *   **Endpoint:** `POST /usuarios`
-*   **Controller:** `UsuarioController.criar()`
-*   **Service:** `UsuarioServiceImpl.criar()`
 *   **Status:** ✅ **Funcional**
-*   **Observações:** Um novo usuário é criado com sucesso.
+*   **Observações:** Novos usuários são criados com sucesso. Para testes, um `data.sql` foi adicionado para criar um usuário `ADMIN` e um `COMUM` na inicialização.
 
 ### 2. Criação de Denúncia
 
 *   **Endpoint:** `POST /denuncias`
-*   **Controller:** `DenunciaController.criar()`
-*   **Service:** `DenunciaServiceImpl.criarDenuncia()`
 *   **Status:** ✅ **Funcional**
-*   **Observações:** Um usuário pode criar uma denúncia e associar um endereço a ela.
+*   **Observações:** Um usuário pode criar uma denúncia. A denúncia é criada com o status `ABERTA` por padrão.
 
-### 3. Listagem de Denúncias (Admin)
+### 3. Consulta de Denúncias (Admin)
 
-*   **Endpoint:** `GET /denuncias`
-*   **Controller:** `DenunciaController.listar()`
-*   **Service:** `DenunciaServiceImpl.listarTodas()`
+*   **Endpoint:** `GET /atendimentos/denuncias`
+*   **Parâmetro:** `?status={ABERTA | EM_ANALISE | FECHADA}` (opcional)
 *   **Status:** ✅ **Funcional**
-*   **Observações:** Todas as denúncias são listadas com sucesso.
+*   **Observações:** Endpoint implementado para que administradores possam listar denúncias e filtrar por status.
 
-### 4. Criação de Atendimento (Admin)
-
-*   **Endpoint:** `POST /atendimentos`
-*   **Controller:** `AtendimentoController.criar()`
-*   **Service:** `AtendimentoServiceImpl.criar()`
-*   **Status:** ✅ **Funcional, mas com melhorias pendentes.**
-*   **Observações:**
-    *   Atualmente, um administrador precisa criar manually um atendimento para cada denúncia.
-    *   **Melhoria pendente:** A criação de um `Atendimento` deveria ser automática quando uma `Denúncia` é criada. O status inicial do `Atendimento` deveria ser `ABERTO`.
-
-### 5. Resposta à Denúncia (Admin)
+### 4. Resposta à Denúncia (Admin)
 
 *   **Endpoint:** `POST /respostas`
-*   **Controller:** `RespostaController.criar()`
-*   **Service:** `RespostaServiceImpl.criarResposta()`
-*   **Status:** ✅ **Funcional, mas com melhorias pendentes.**
+*   **DTO de Requisição:** `RespostaDTO` agora usa `denunciaId`.
+*   **Status:** ✅ **Funcional**
 *   **Observações:**
-    *   Um administrador pode responder a um atendimento.
-    *   **Melhoria pendente:** Ao responder a um atendimento, o status do `Atendimento` deveria ser alterado para `CONCLUIDO`.
+    *   Um administrador pode responder diretamente a uma denúncia.
+    *   Ao criar uma `Resposta`, o status da `Denuncia` associada é automaticamente alterado para `EM_ANALISE`.
 
 ## Funcionalidades a Implementar
 
-*   **Atualização automática de status:**
-    *   Ao criar um `Atendimento`, o status deve ser definido como `EM_ANALISE` automaticamente.
-    *   Ao criar uma `Resposta`, o status do `Atendimento` associado deve ser alterado para `CONCLUIDO`.
+*   **Endpoint para fechar denúncia:** Criar um endpoint para o admin alterar o status de uma denúncia para `FECHADA`.
 *   **Spring Security:**
     *   Implementar controle de acesso baseado em papéis (roles) para diferenciar usuários comuns de administradores.
     *   Proteger os endpoints de acordo com os papéis dos usuários.
 *   **Endpoint secreto para criação de admins:**
-    *   Criar um endpoint protegido para a criação de usuários administradores.
+    *   Criar um endpoint protegido para a criação de usuários administradores (alternativa ao `data.sql`).
+*   **Refatoração de DTOs:** Continuar a otimização dos DTOs para usar IDs em vez de objetos aninhados, conforme a necessidade.

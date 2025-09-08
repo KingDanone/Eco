@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {UsuarioMapper.class, EnderecoMapper.class})
+@Mapper(componentModel = "spring", uses = {UsuarioMapper.class, EnderecoMapper.class, RespostaMapper.class})
 public interface DenunciaMapper {
 
     DenunciaMapper INSTANCE = Mappers.getMapper(DenunciaMapper.class);
@@ -18,6 +18,8 @@ public interface DenunciaMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "dataCriacao", ignore = true)
     @Mapping(target = "dataAtualizacao", ignore = true)
+    @Mapping(target = "usuario", ignore = true)
+    @Mapping(target = "endereco", ignore = true)
     Denuncia toEntity(DenunciaDTO denunciaDTO);
 
     List<DenunciaDTO> toDTO(List<Denuncia> denuncias);

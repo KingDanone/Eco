@@ -34,12 +34,4 @@ public class Atendimento {
     @JoinColumn(name = "denuncia_id", nullable = false)
     private Denuncia denuncia;
 
-    @OneToMany(mappedBy = "atendimento", cascade = CascadeType.ALL,
-            orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Resposta> respostas = new ArrayList<>();
-
-    public void adicionarResposta(Resposta resposta) {
-        respostas.add(resposta);
-        resposta.setAtendimento(this);
     }
-}

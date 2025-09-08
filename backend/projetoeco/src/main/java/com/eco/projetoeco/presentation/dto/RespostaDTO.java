@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RespostaDTO {
 
+    @Schema(description = "identificador de Resposta", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
     @NotBlank(message = "Mensagem é obrigatória")
@@ -27,7 +28,7 @@ public class RespostaDTO {
     @Schema(description = "Data da resposta", accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime dataResposta;
 
-    @Schema(description = "Protocolo do atendimento")
-    private Long atendimentoId;
+    @Schema(description = "ID da denúncia a qual a resposta se refere")
+    private Long denunciaId;
 
 }

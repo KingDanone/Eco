@@ -1,0 +1,12 @@
+package com.eco.projetoeco.presentation.dto;
+
+import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+@Data
+public class UpdateDenunciaStatusDTO {
+
+    @NotNull(message = "O novo status não pode ser nulo.")
+    private StatusDenuncia status;
+}
