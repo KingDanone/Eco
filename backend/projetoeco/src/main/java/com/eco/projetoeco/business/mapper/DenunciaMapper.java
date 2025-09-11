@@ -1,7 +1,7 @@
 package com.eco.projetoeco.business.mapper;
 
 import com.eco.projetoeco.data.model.Denuncia;
-import com.eco.projetoeco.presentation.dto.DenunciaDTO;
+import com.eco.projetoeco.presentation.dto.denunciadto.DenunciaDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

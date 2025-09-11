@@ -2,8 +2,9 @@ package com.eco.projetoeco.presentation.controller;
 
 import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
 import com.eco.projetoeco.business.service.AtendimentoService;
-import com.eco.projetoeco.presentation.dto.DenunciaDTO;
+import com.eco.projetoeco.presentation.dto.denunciadto.DenunciaDTO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ public class AtendimentoController {
     }
 
     @GetMapping("/denuncias")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<DenunciaDTO>> buscarDenuncias(@RequestParam(required = false) StatusDenuncia status) {
         return ResponseEntity.ok(service.buscarDenuncias(status));
     }

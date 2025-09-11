@@ -1,5 +1,6 @@
 package com.eco.projetoeco.business.service.impl;
 
+import com.eco.projetoeco.business.exception.ResourceNotFoundException;
 import com.eco.projetoeco.business.mapper.HorariosColetaMapper;
 import com.eco.projetoeco.presentation.dto.HorariosColetaDTO;
 import com.eco.projetoeco.data.model.Endereco;
@@ -32,7 +33,7 @@ public class HorariosColetaServiceImpl implements HorariosColetaService {
     @Transactional
     public HorariosColetaDTO criar(HorariosColetaDTO request) {
         Endereco endereco = enderecoRepository.findByCep(request.getEnderecoCep())
-                .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Endereço não encontrado"));
 
         HorariosColeta coleta = mapper.toEntity(request);
         coleta.setEndereco(endereco);

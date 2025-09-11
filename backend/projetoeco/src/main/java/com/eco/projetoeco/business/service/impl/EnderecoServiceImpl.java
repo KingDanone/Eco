@@ -1,5 +1,6 @@
 package com.eco.projetoeco.business.service.impl;
 
+import com.eco.projetoeco.business.exception.ResourceNotFoundException;
 import com.eco.projetoeco.business.mapper.EnderecoMapper;
 import com.eco.projetoeco.presentation.dto.EnderecoDTO;
 import com.eco.projetoeco.data.model.Endereco;
@@ -41,7 +42,7 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Transactional
     public void deletarPorCep(String cep) {
         if (!repository.existsByCep(cep)) {
-            throw new RuntimeException("Endereço não encontrado para o CEP: " + cep);
+            throw new ResourceNotFoundException("Endereço não encontrado para o CEP: " + cep);
         }
         repository.deleteByCep(cep);
     }

@@ -1,8 +1,8 @@
 package com.eco.projetoeco.presentation.dto;
 
+import com.eco.projetoeco.data.model.enuns.UserRole;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -30,6 +30,10 @@ public class UsuarioDTO {
     @Schema(description = "ID do usuário.", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
+
+    @Schema(description = "Papel (role) do usuário.", example = "USER", accessMode = Schema.AccessMode.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private UserRole role;
 
     @Schema(description = "CPF do usuário contendo exatamente 11 dígitos numéricos.", example = "62617565033")
     @Pattern(regexp = "\\d{11}", message = "CPF deve conter exatamente 11 dígitos numéricos")

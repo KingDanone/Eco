@@ -1,5 +1,6 @@
 package com.eco.projetoeco.business.service.impl;
 
+import com.eco.projetoeco.business.exception.ResourceNotFoundException;
 import com.eco.projetoeco.business.mapper.AvaliacaoMapper;
 import com.eco.projetoeco.presentation.dto.AvaliacaoDTO;
 import com.eco.projetoeco.data.model.Avaliacao;
@@ -34,10 +35,10 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
     @Override
     public AvaliacaoDTO criar(AvaliacaoDTO dto) {
         Usuario usuario = usuarioRepository.findByCpf(dto.getCpfUsuario())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
 
         Jogos jogo = jogosRepository.findById(dto.getIdJogo())
-                .orElseThrow(() -> new RuntimeException("Jogo não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Jogo não encontrado"));
 
         Avaliacao avaliacao = mapper.toEntity(dto);
         avaliacao.setUsuario(usuario);

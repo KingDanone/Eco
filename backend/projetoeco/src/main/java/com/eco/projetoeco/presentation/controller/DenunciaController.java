@@ -1,12 +1,15 @@
 package com.eco.projetoeco.presentation.controller;
 
 
-import com.eco.projetoeco.presentation.dto.DenunciaDTO;
+import com.eco.projetoeco.presentation.dto.denunciadto.DenunciaDTO;
 import com.eco.projetoeco.business.service.DenunciaService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.eco.projetoeco.presentation.dto.UpdateDenunciaStatusDTO;
+import com.eco.projetoeco.presentation.dto.denunciadto.UpdateDenunciaStatusDTO;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,18 +24,22 @@ public class DenunciaController {
     public DenunciaController(DenunciaService denunciaService) {this.denunciaService = denunciaService;}
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<DenunciaDTO> criar(
-            @RequestBody @Valid DenunciaDTO dto){
-        DenunciaDTO criada = denunciaService.criarDenuncia(dto);
+            @RequestBody @Valid DenunciaDTO dto,
+            @AuthenticationPrincipal UserDetails userDetails){
+        DenunciaDTO criada = denunciaService.criarDenuncia(dto, userDetails);
         return ResponseEntity.status(HttpStatus.CREATED).body(criada);
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<DenunciaDTO>> listar(){
         return ResponseEntity.ok(denunciaService.listarTodas());
     }
 
     @GetMapping("/buscar/{id}")
+    @PreAuthorize("hasRole('ADMIN') or @denunciaServiceImpl.isOwner(#id, authentication.principal.username)")
     public ResponseEntity<DenunciaDTO> buscarPorId(@PathVariable Long id){
         return denunciaService.buscarPorId(id)
                 .map(ResponseEntity::ok)
@@ -40,6 +47,7 @@ public class DenunciaController {
     }
 
     @PatchMapping("/{id}/status")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<DenunciaDTO> atualizarStatus(
             @PathVariable Long id,
             @RequestBody @Valid UpdateDenunciaStatusDTO statusDTO) {
