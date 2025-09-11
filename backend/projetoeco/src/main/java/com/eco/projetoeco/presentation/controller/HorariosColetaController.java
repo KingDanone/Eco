@@ -4,6 +4,7 @@ import com.eco.projetoeco.presentation.dto.HorariosColetaDTO;
 import com.eco.projetoeco.business.service.HorariosColetaService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,17 +20,20 @@ public class HorariosColetaController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<HorariosColetaDTO> criar(@RequestBody @Valid HorariosColetaDTO dto) {
         HorariosColetaDTO criado = service.criar(dto);
         return ResponseEntity.status(201).body(criado);
     }
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<HorariosColetaDTO>> listar() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<HorariosColetaDTO> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
                 .map(ResponseEntity::ok)
@@ -37,6 +41,7 @@ public class HorariosColetaController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();

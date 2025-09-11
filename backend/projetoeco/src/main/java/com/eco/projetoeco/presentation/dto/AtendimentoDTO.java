@@ -1,6 +1,7 @@
 package com.eco.projetoeco.presentation.dto;
 
 import com.eco.projetoeco.data.model.enuns.StatusAtendimento;
+import com.eco.projetoeco.presentation.dto.denunciadto.DenunciaDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +15,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter

@@ -1,4 +1,4 @@
-package com.eco.projetoeco.presentation.dto;
+package com.eco.projetoeco.presentation.dto.denunciadto;
 
 import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
 import jakarta.validation.constraints.NotNull;

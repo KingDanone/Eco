@@ -13,5 +13,6 @@ public interface UsuarioService {
     UsuarioDTO buscarPorCpf(String cpf);
     UsuarioDTO editar(String cpf, @Valid UsuarioDTO dto);
     void alterarSenha(String cpf, @Valid UsuarioSenhaDTO dto);
+    UsuarioDTO criarAdmin(@Valid UsuarioDTO dto);
 
 }

@@ -1,10 +1,12 @@
-package com.eco.projetoeco.presentation.dto;
+package com.eco.projetoeco.presentation.dto.denunciadto;
 
+import com.eco.projetoeco.presentation.dto.EnderecoDTO;
+import com.eco.projetoeco.presentation.dto.RespostaDTO;
+import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -44,9 +46,6 @@ public class DenunciaDTO {
 
     @Schema(description = "Data de atualização", accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime dataAtualizacao;
-
-    @Schema(description = "ID do usuário autor da denúncia. Usado para criar uma nova denúncia.", example = "1")
-    private Long usuarioId;
 
     @Schema(description = "Usuário autor da denúncia", accessMode = Schema.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_NULL)

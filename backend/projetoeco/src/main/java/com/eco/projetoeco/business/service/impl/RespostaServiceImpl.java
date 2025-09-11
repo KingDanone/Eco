@@ -1,5 +1,6 @@
 package com.eco.projetoeco.business.service.impl;
 
+import com.eco.projetoeco.business.exception.ResourceNotFoundException;
 import com.eco.projetoeco.business.mapper.RespostaMapper;
 import com.eco.projetoeco.business.service.RespostaService;
 import com.eco.projetoeco.data.model.Denuncia;
@@ -31,7 +32,9 @@ public class RespostaServiceImpl implements RespostaService {
     public RespostaDTO criarResposta(RespostaDTO dto) {
         // 1. Buscar a Denuncia
         Denuncia denuncia = denunciaRepository.findById(dto.getDenunciaId())
-                .orElseThrow(() -> new RuntimeException("Denúncia com id " + dto.getDenunciaId() + " não encontrada"));
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Denuncia com Id" + dto.getDenunciaId() + " não encontrado com o CPF")
+                );
 
         // 2. Mapear DTO para entidade Resposta
         Resposta resposta = mapper.toEntity(dto);

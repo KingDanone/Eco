@@ -1,5 +1,6 @@
 package com.eco.projetoeco.business.service.impl;
 
+import com.eco.projetoeco.business.exception.ResourceNotFoundException;
 import com.eco.projetoeco.business.mapper.JogosMapper;
 import com.eco.projetoeco.presentation.dto.JogosDTO;
 import com.eco.projetoeco.data.model.Jogos;
@@ -35,7 +36,7 @@ public class JogosServiceImpl implements JogosService {
     @Override
     public JogosDTO buscarPorId(Long id) {
         Jogos jogo = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Jogo não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Jogo não encontrado"));
         return mapper.toDTO(jogo);
     }
 

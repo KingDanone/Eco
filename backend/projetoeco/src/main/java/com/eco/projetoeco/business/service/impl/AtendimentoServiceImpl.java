@@ -7,7 +7,7 @@ import com.eco.projetoeco.data.model.Denuncia;
 import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
 import com.eco.projetoeco.data.repository.AtendimentoRepository;
 import com.eco.projetoeco.data.repository.DenunciaRepository;
-import com.eco.projetoeco.presentation.dto.DenunciaDTO;
+import com.eco.projetoeco.presentation.dto.denunciadto.DenunciaDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
