@@ -8,8 +8,8 @@ spring:
     open-in-view: false
   datasource:
     url: jdbc:mysql://localhost:3306/eco?useTimezone=true&serverTimezone=UTC
-    username: root
-    password: 7422
+    username: <seu-usuario>
+    password: <sua-senha>
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 springdoc:
