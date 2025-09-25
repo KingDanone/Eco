@@ -3,13 +3,13 @@ spring:
     name: projeto-eco
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     open-in-view: false
   datasource:
     url: jdbc:mysql://localhost:3306/eco?useTimezone=true&serverTimezone=UTC
-    username: <seu-usuario>
-    password: <sua-senha>
+    username: root
+    password: 7422
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 springdoc:

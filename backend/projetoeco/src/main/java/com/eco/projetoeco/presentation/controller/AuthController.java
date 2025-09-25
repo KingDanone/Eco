@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -26,14 +28,24 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
+        log.info("Tentativa de login para o identificador: {}", request.getIdentifier());
         var authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getIdentifier(), request.getSenha())
         );
+        log.info("Autenticação bem-sucedida para: {}", request.getIdentifier());
 
         var user = (Usuario) authentication.getPrincipal();
-        final String token = jwtService.generateToken(user);
-        final UsuarioDTO usuarioDTO = usuarioMapper.toDTO(user);
+        log.info("Usuário principal obtido: {}", user.getEmail());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token, usuarioDTO));
+        final String token = jwtService.generateToken(user);
+        log.info("Token gerado com sucesso.");
+
+        final UsuarioDTO usuarioDTO = usuarioMapper.toDTO(user);
+        log.info("DTO do usuário mapeado com sucesso: {}", usuarioDTO.getEmail());
+
+        LoginResponseDTO response = new LoginResponseDTO(token, usuarioDTO);
+        log.info("Resposta de login pronta para ser enviada.");
+
+        return ResponseEntity.ok(response);
     }
 }

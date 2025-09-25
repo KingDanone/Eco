@@ -12,7 +12,10 @@ import com.eco.projetoeco.data.repository.EnderecoRepository;
 import com.eco.projetoeco.data.repository.UsuarioRepository;
 import com.eco.projetoeco.business.service.DenunciaService;
 import com.eco.projetoeco.presentation.dto.denunciadto.UpdateDenunciaStatusDTO;
+import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
+import com.eco.projetoeco.presentation.dto.denunciadto.EditarDenunciaDTO;
 import jakarta.transaction.Transactional;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -69,9 +72,39 @@ public class DenunciaServiceImpl implements DenunciaService {
     }
 
     @Override
+    public List<DenunciaDTO> listarPorUsuario(UserDetails userDetails) {
+        Usuario usuario = usuarioRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário com email " + userDetails.getUsername() + " não encontrado"));
+
+        return denunciaMapper.toDTO(repository.findByUsuarioId(usuario.getId()));
+    }
+
+    @Override
     public Optional<DenunciaDTO> buscarPorId(Long id) {
         return repository.findById(id)
                 .map(denunciaMapper::toDTO);
+    }
+
+    @Override
+    @Transactional
+    public DenunciaDTO editarDenuncia(Long id, EditarDenunciaDTO dados, UserDetails userDetails) {
+        Denuncia denuncia = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Denúncia com id " + id + " não encontrada."));
+
+        if (!denuncia.getUsuario().getEmail().equals(userDetails.getUsername())) {
+            throw new AccessDeniedException("Você não tem permissão para editar esta denúncia.");
+        }
+
+        if (denuncia.getStatus() != StatusDenuncia.ABERTA) {
+            throw new IllegalStateException("Apenas denúncias com status 'ABERTA' podem ser editadas.");
+        }
+
+        denuncia.setTitulo(dados.getTitulo());
+        denuncia.setDescricao(dados.getDescricao());
+
+        Denuncia salva = repository.save(denuncia);
+
+        return denunciaMapper.toDTO(salva);
     }
 
     @Override

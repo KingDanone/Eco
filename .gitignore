@@ -2,7 +2,7 @@
 # Padrões Comuns de IDE e Sistema
 # ===================================================================
 # IntelliJ
-.idea/
+backend/.idea/
 *.iws
 *.iml
 *.ipr
