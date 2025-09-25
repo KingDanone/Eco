@@ -1,5 +1,6 @@
 package com.eco.projetoeco.presentation.dto.denunciadto;
 
+import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
 import com.eco.projetoeco.presentation.dto.EnderecoDTO;
 import com.eco.projetoeco.presentation.dto.RespostaDTO;
 import com.eco.projetoeco.presentation.dto.UsuarioDTO;
@@ -33,7 +34,7 @@ public class DenunciaDTO {
 
     @Schema(description = "Título da denúncia.", example = "Lixo acumulado na praça")
     @NotBlank(message = "Título é obrigatório")
-    @Size(min = 3, max = 150, message = "Título deve ter entre 3 e 150 caracteres")
+    @Size(min = 3, max = 255, message = "Título deve ter entre 3 e 255 caracteres")
     private String titulo;
 
     @Schema(description = "Descrição da denúncia.", example = "Há lixo acumulado há semanas na praça central.")
@@ -46,6 +47,9 @@ public class DenunciaDTO {
 
     @Schema(description = "Data de atualização", accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime dataAtualizacao;
+
+    @Schema(description = "Status atual da denúncia", accessMode = Schema.AccessMode.READ_ONLY)
+    private StatusDenuncia status;
 
     @Schema(description = "Usuário autor da denúncia", accessMode = Schema.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_NULL)

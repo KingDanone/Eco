@@ -1,6 +1,55 @@
+# ===================================================================
+# Padrões Comuns de IDE e Sistema
+# ===================================================================
+# IntelliJ
+backend/.idea/
+*.iws
+*.iml
+*.ipr
+
+# VS Code
+.vscode/
+
+# Arquivos de sistema
+*~
+*.swp
+
+# ===================================================================
+# Java / Maven (Projeto Backend)
+# ===================================================================
+# Arquivos de configuração sensíveis
+backend/projetoeco/src/main/resources/application.yml
+
+backend/projetoeco/target/
+backend/projetoeco/.mvn/wrapper/maven-wrapper.jar
+backend/HELP.md
+
+# STS
+backend/projetoeco/.apt_generated
+backend/projetoeco/.classpath
+backend/projetoeco/.factorypath
+backend/projetoeco/.project
+backend/projetoeco/.settings
+backend/projetoeco/.springBeans
+backend/projetoeco/.sts4-cache
+
+# NetBeans
+backend/projetoeco/nbproject/private/
+backend/projetoeco/nbbuild/
+backend/projetoeco/dist/
+backend/projetoeco/nbdist/
+backend/projetoeco/.nb-gradle/
+backend/projetoeco/build/
+
+# Manter pastas 'target' e 'build' aninhadas, se necessário
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# ===================================================================
+# Python (Projeto APIS)
+# ===================================================================
 apis/venv/
-apis/.vscode/
 apis/.env
 apis/__pycache__/
-.idea/
-backend/.idea/
