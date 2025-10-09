@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DenunciaRepository extends JpaRepository<Denuncia, Long> {
@@ -19,4 +20,7 @@ public interface DenunciaRepository extends JpaRepository<Denuncia, Long> {
 
     @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario JOIN FETCH d.endereco LEFT JOIN FETCH d.respostas WHERE d.status = :status")
     List<Denuncia> findAllByStatusWithAssociations(StatusDenuncia status);
+
+    @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario JOIN FETCH d.endereco LEFT JOIN FETCH d.respostas WHERE d.id = :id")
+    Optional<Denuncia> findByIdWithAssociations(Long id);
 }

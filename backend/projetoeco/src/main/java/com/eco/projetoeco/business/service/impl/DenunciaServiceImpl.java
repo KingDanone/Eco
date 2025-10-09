@@ -81,7 +81,7 @@ public class DenunciaServiceImpl implements DenunciaService {
 
     @Override
     public Optional<DenunciaDTO> buscarPorId(Long id) {
-        return repository.findById(id)
+        return repository.findByIdWithAssociations(id)
                 .map(denunciaMapper::toDTO);
     }
 
@@ -122,7 +122,7 @@ public class DenunciaServiceImpl implements DenunciaService {
 
     @Override
     public boolean isOwner(Long id, String username) {
-        return repository.findById(id)
+        return repository.findByIdWithAssociations(id)
                 .map(denuncia -> denuncia.getUsuario().getEmail().equals(username))
                 .orElse(false);
     }
