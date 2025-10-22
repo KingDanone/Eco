@@ -23,4 +23,6 @@ public interface DenunciaRepository extends JpaRepository<Denuncia, Long> {
 
     @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario JOIN FETCH d.endereco LEFT JOIN FETCH d.respostas WHERE d.id = :id")
     Optional<Denuncia> findByIdWithAssociations(Long id);
+
+    long countByStatus(StatusDenuncia status);
 }
