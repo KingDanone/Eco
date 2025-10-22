@@ -4,12 +4,13 @@ import com.eco.projetoeco.presentation.dto.denunciadto.DenunciaDTO;
 import com.eco.projetoeco.presentation.dto.denunciadto.EditarDenunciaDTO;
 import com.eco.projetoeco.presentation.dto.denunciadto.UpdateDenunciaStatusDTO;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface DenunciaService {
-    DenunciaDTO criarDenuncia(DenunciaDTO dto, UserDetails userDetails);
+    DenunciaDTO criarDenuncia(DenunciaDTO dto, MultipartFile anexo, UserDetails userDetails);
     List<DenunciaDTO> listarTodas();
     List<DenunciaDTO> listarPorUsuario(UserDetails userDetails);
     Optional<DenunciaDTO> buscarPorId(Long id);
