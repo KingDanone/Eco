@@ -54,4 +54,8 @@ public class Denuncia {
 
     @OneToMany(mappedBy = "denuncia", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Resposta> respostas = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "anexo_id", referencedColumnName = "id")
+    private Anexo anexo;
 }

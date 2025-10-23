@@ -1,6 +1,7 @@
 package com.eco.projetoeco.presentation.dto.denunciadto;
 
 import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
+import com.eco.projetoeco.presentation.dto.AnexoDTO;
 import com.eco.projetoeco.presentation.dto.EnderecoDTO;
 import com.eco.projetoeco.presentation.dto.RespostaDTO;
 import com.eco.projetoeco.presentation.dto.UsuarioDTO;
@@ -61,4 +62,7 @@ public class DenunciaDTO {
 
     @Schema(description = "Respostas associadas à denúncia", accessMode = Schema.AccessMode.READ_ONLY)
     private List<RespostaDTO> respostas;
+
+    @Schema(description = "Anexo da denúncia", accessMode = Schema.AccessMode.READ_ONLY)
+    private AnexoDTO anexo;
 }
