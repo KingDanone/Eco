@@ -2,12 +2,12 @@ spring:
   application:
     name: projeto-eco
   datasource:
-    url: jdbc:postgresql://${SPRING_DATASOURCE_HOST}:${SPRING_DATASOURCE_PORT}/${SPRING_DATASOURCE_DATABASE}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/eco
+    username: root
+    password: 7422
     driver-class-name: org.postgresql.Driver
 file:
-  upload-dir: ${FILE_UPLOAD_DIR:uploads/}
+  upload-dir: uploads/
 
 springdoc:
   swagger-ui:
