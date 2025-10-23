@@ -6,6 +6,7 @@ import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import com.eco.projetoeco.presentation.dto.UsuarioSenhaDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,33 +21,26 @@ public class UsuarioController {
         this.service = service;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<UsuarioDTO> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
-        try {
-            UsuarioDTO usuario = service.autenticar(loginRequest.getIdentifier(), loginRequest.getSenha());
-            return ResponseEntity.ok(usuario);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-    }
-
     @PostMapping
     public ResponseEntity<UsuarioDTO> criar(@Valid @RequestBody UsuarioDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criar(dto));
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UsuarioDTO>> listarTodos() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
     @PutMapping("/{cpf}")
+    @PreAuthorize("hasRole('ADMIN') or #cpf == authentication.principal.username")
     public ResponseEntity<UsuarioDTO> editar(@PathVariable String cpf, @Valid @RequestBody UsuarioDTO dto) {
         UsuarioDTO usuarioAtualizado = service.editar(cpf, dto);
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
     @PutMapping("/{cpf}/senha")
+    @PreAuthorize("hasRole('ADMIN') or #cpf == authentication.principal.username")
     public ResponseEntity<Void> alterarSenha(@PathVariable String cpf,
                                              @Valid @RequestBody UsuarioSenhaDTO dto) {
         service.alterarSenha(cpf, dto);
@@ -54,6 +48,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{cpf}")
+    @PreAuthorize("hasRole('ADMIN') or #cpf == authentication.principal.username")
     public ResponseEntity<UsuarioDTO> buscarPorCpf(@PathVariable String cpf) {
         return ResponseEntity.ok(service.buscarPorCpf(cpf));
     }

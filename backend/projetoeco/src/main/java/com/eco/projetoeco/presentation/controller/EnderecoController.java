@@ -5,6 +5,7 @@ import com.eco.projetoeco.business.service.EnderecoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,11 +23,13 @@ public class EnderecoController {
     // Desabilitado: Endereços são criados apenas no fluxo de denúncia
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<EnderecoDTO>> listarTodos() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
     @DeleteMapping("/{cep}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deletar(@PathVariable String cep) {
         service.deletarPorCep(cep);
         return ResponseEntity.noContent().build();

@@ -35,11 +35,13 @@ public class EnderecoDTO {
     @Schema(description = "Estado", example = "MA")
     @NotBlank(message = "Estado é obrigatório")
     @Size(min = 2, max = 2, message = "Estado deve ter 2 caracteres")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String estado;
 
     @Schema(description = "Cidade", example = "São Luís")
     @NotBlank(message = "Cidade é obrigatória")
     @Size(min = 2, max = 100, message = "Cidade deve ter entre 2 e 100 caracteres")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String cidade;
 
     @Schema(description = "Bairro", example = "Centro")

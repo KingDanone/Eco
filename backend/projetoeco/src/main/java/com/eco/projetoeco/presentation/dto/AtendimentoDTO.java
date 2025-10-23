@@ -1,6 +1,7 @@
 package com.eco.projetoeco.presentation.dto;
 
 import com.eco.projetoeco.data.model.enuns.StatusAtendimento;
+import com.eco.projetoeco.presentation.dto.denunciadto.DenunciaDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +15,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
@@ -36,10 +36,11 @@ public class AtendimentoDTO {
     @Schema(description = "Status do atendimento")
     private StatusAtendimento status;
 
-    @Schema(description = "Denúncia vinculada")
-    @NotNull(message = "Denúncia é obrigatória")
+    @Schema(description = "ID da denúncia a ser vinculada. Usado para criar um novo atendimento.", example = "1")
+    @NotNull(message = "ID da Denúncia é obrigatório")
+    private Long denunciaId;
+
+    @Schema(description = "Denúncia vinculada", accessMode = Schema.AccessMode.READ_ONLY)
     private DenunciaDTO denuncia;
 
-    @Schema(description = "Respostas associadas ao atendimento")
-    private List<RespostaDTO> respostas;
-}
+    }
