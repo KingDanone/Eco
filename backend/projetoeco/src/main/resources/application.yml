@@ -1,23 +1,13 @@
 spring:
   application:
     name: projeto-eco
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: false
-    open-in-view: false
-
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/eco?useTimezone=true&serverTimezone=UTC
-#    username: root
-#    password: 7422
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-
   datasource:
     url: jdbc:postgresql://localhost:5432/eco
     username: root
     password: 7422
     driver-class-name: org.postgresql.Driver
+file:
+  upload-dir: uploads/
 
 springdoc:
   swagger-ui:
