@@ -1,6 +1,6 @@
 package com.eco.projetoeco.presentation.dto;
 
-import com.eco.projetoeco.data.model.enuns.UserRole;
+import com.eco.projetoeco.domain.model.enuns.UserRole;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;

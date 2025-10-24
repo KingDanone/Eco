@@ -1,6 +1,6 @@
 package com.eco.projetoeco.presentation.controller;
 
-import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
+import com.eco.projetoeco.domain.model.enuns.StatusDenuncia;
 import com.eco.projetoeco.business.service.AtendimentoService;
 import com.eco.projetoeco.presentation.dto.denunciadto.DenunciaDTO;
 import org.springframework.http.ResponseEntity;

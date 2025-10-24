@@ -1,6 +1,6 @@
 package com.eco.projetoeco.presentation.dto;
 
-import com.eco.projetoeco.data.model.enuns.StatusAtendimento;
+import com.eco.projetoeco.domain.model.enuns.StatusAtendimento;
 import com.eco.projetoeco.presentation.dto.denunciadto.DenunciaDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,6 +1,6 @@
 package com.eco.projetoeco.presentation.dto.denunciadto;
 
-import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
+import com.eco.projetoeco.domain.model.enuns.StatusDenuncia;
 import com.eco.projetoeco.presentation.dto.AnexoDTO;
 import com.eco.projetoeco.presentation.dto.EnderecoDTO;
 import com.eco.projetoeco.presentation.dto.RespostaDTO;

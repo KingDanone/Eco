@@ -1,6 +1,6 @@
 package com.eco.projetoeco.business.mapper;
 
-import com.eco.projetoeco.data.model.Avaliacao;
+import com.eco.projetoeco.domain.model.Avaliacao;
 import com.eco.projetoeco.presentation.dto.AvaliacaoDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

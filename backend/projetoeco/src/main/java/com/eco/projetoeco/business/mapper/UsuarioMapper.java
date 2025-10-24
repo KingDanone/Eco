@@ -1,6 +1,6 @@
 package com.eco.projetoeco.business.mapper;
 
-import com.eco.projetoeco.data.model.Usuario;
+import com.eco.projetoeco.domain.model.Usuario;
 import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

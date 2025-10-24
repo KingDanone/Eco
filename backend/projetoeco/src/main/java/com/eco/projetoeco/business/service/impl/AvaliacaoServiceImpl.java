@@ -3,12 +3,12 @@ package com.eco.projetoeco.business.service.impl;
 import com.eco.projetoeco.business.exception.ResourceNotFoundException;
 import com.eco.projetoeco.business.mapper.AvaliacaoMapper;
 import com.eco.projetoeco.presentation.dto.AvaliacaoDTO;
-import com.eco.projetoeco.data.model.Avaliacao;
-import com.eco.projetoeco.data.model.Jogos;
-import com.eco.projetoeco.data.model.Usuario;
-import com.eco.projetoeco.data.repository.AvaliacaoRepository;
-import com.eco.projetoeco.data.repository.JogosRepository;
-import com.eco.projetoeco.data.repository.UsuarioRepository;
+import com.eco.projetoeco.domain.model.Avaliacao;
+import com.eco.projetoeco.domain.model.Jogos;
+import com.eco.projetoeco.domain.model.Usuario;
+import com.eco.projetoeco.domain.repository.AvaliacaoRepository;
+import com.eco.projetoeco.domain.repository.JogosRepository;
+import com.eco.projetoeco.domain.repository.UsuarioRepository;
 import com.eco.projetoeco.business.service.AvaliacaoService;
 import org.springframework.stereotype.Service;
 

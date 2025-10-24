@@ -1,7 +1,7 @@
 package com.eco.projetoeco.presentation.dto;
 
-import com.eco.projetoeco.data.model.enuns.DiaSemana;
-import com.eco.projetoeco.data.model.enuns.Turno;
+import com.eco.projetoeco.domain.model.enuns.DiaSemana;
+import com.eco.projetoeco.domain.model.enuns.Turno;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

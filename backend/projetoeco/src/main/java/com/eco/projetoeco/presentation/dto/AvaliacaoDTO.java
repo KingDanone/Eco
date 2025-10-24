@@ -1,6 +1,6 @@
 package com.eco.projetoeco.presentation.dto;
 
-import com.eco.projetoeco.data.model.enuns.NivelAvaliacao;
+import com.eco.projetoeco.domain.model.enuns.NivelAvaliacao;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

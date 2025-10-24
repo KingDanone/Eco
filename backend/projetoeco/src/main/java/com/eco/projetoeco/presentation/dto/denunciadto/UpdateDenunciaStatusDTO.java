@@ -1,6 +1,6 @@
 package com.eco.projetoeco.presentation.dto.denunciadto;
 
-import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
+import com.eco.projetoeco.domain.model.enuns.StatusDenuncia;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

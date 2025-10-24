@@ -1,6 +1,6 @@
 package com.eco.projetoeco.business.mapper;
 
-import com.eco.projetoeco.data.model.HorariosColeta;
+import com.eco.projetoeco.domain.model.HorariosColeta;
 import com.eco.projetoeco.presentation.dto.HorariosColetaDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

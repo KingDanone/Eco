@@ -1,6 +1,6 @@
 package com.eco.projetoeco.business.mapper;
 
-import com.eco.projetoeco.data.model.Anexo;
+import com.eco.projetoeco.domain.model.Anexo;
 import com.eco.projetoeco.presentation.dto.AnexoDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

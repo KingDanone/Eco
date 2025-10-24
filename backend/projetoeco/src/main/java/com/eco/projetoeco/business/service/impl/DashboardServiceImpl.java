@@ -1,9 +1,9 @@
 package com.eco.projetoeco.business.service.impl;
 
 import com.eco.projetoeco.business.service.DashboardService;
-import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
-import com.eco.projetoeco.data.repository.DenunciaRepository;
-import com.eco.projetoeco.data.repository.UsuarioRepository;
+import com.eco.projetoeco.domain.model.enuns.StatusDenuncia;
+import com.eco.projetoeco.domain.repository.DenunciaRepository;
+import com.eco.projetoeco.domain.repository.UsuarioRepository;
 import com.eco.projetoeco.presentation.dto.admin.DashboardStatsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

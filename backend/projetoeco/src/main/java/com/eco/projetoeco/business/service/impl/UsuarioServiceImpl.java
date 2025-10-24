@@ -2,11 +2,11 @@ package com.eco.projetoeco.business.service.impl;
 
 import com.eco.projetoeco.business.exception.ResourceNotFoundException;
 import com.eco.projetoeco.business.mapper.UsuarioMapper;
-import com.eco.projetoeco.data.model.enuns.UserRole;
+import com.eco.projetoeco.domain.model.enuns.UserRole;
 import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import com.eco.projetoeco.presentation.dto.UsuarioSenhaDTO;
-import com.eco.projetoeco.data.model.Usuario;
-import com.eco.projetoeco.data.repository.UsuarioRepository;
+import com.eco.projetoeco.domain.model.Usuario;
+import com.eco.projetoeco.domain.repository.UsuarioRepository;
 import com.eco.projetoeco.business.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

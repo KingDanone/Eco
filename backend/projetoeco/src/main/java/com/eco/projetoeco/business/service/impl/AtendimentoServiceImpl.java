@@ -3,10 +3,10 @@ package com.eco.projetoeco.business.service.impl;
 import com.eco.projetoeco.business.mapper.AtendimentoMapper;
 import com.eco.projetoeco.business.mapper.DenunciaMapper;
 import com.eco.projetoeco.business.service.AtendimentoService;
-import com.eco.projetoeco.data.model.Denuncia;
-import com.eco.projetoeco.data.model.enuns.StatusDenuncia;
-import com.eco.projetoeco.data.repository.AtendimentoRepository;
-import com.eco.projetoeco.data.repository.DenunciaRepository;
+import com.eco.projetoeco.domain.model.Denuncia;
+import com.eco.projetoeco.domain.model.enuns.StatusDenuncia;
+import com.eco.projetoeco.domain.repository.AtendimentoRepository;
+import com.eco.projetoeco.domain.repository.DenunciaRepository;
 import com.eco.projetoeco.presentation.dto.denunciadto.DenunciaDTO;
 import org.springframework.stereotype.Service;
 

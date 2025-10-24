@@ -1,8 +1,8 @@
 package com.eco.projetoeco.presentation.controller;
 
 import com.eco.projetoeco.business.mapper.UsuarioMapper;
-import com.eco.projetoeco.business.security.JwtService;
-import com.eco.projetoeco.data.model.Usuario;
+import com.eco.projetoeco.infrastructure.security.JwtService;
+import com.eco.projetoeco.domain.model.Usuario;
 import com.eco.projetoeco.presentation.dto.LoginRequestDTO;
 import com.eco.projetoeco.presentation.dto.LoginResponseDTO;
 import com.eco.projetoeco.presentation.dto.UsuarioDTO;
