@@ -2,17 +2,35 @@ spring:
   application:
     name: projeto-eco
   datasource:
-    url: jdbc:postgresql://localhost:5432/eco
-    username: root
-    password: 7422
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:eco}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:7422}
     driver-class-name: org.postgresql.Driver
   jpa:
-    open-in-view: false
-file:
-  upload-dir: uploads/
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: ${SHOW_SQL:false}
 
+# Configuração JWT
+jwt:
+  secret: ${JWT_SECRET:a2FqZG5hc2RqbmFrc2RuYWtzZG5ha3Nkam5ha3Nkam5hc2tkanA=}
+  expiration: ${JWT_EXPIRATION:36000000}
+
+# Upload de arquivos
+file:
+  upload-dir: ${FILE_UPLOAD_DIR:uploads/}
+
+# Swagger
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
   api-docs:
     path: /api-docs
+
+# Server
+server:
+  port: ${SERVER_PORT:8080}
