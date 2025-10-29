@@ -66,11 +66,6 @@ public class Usuario implements UserDetails {
     @JsonManagedReference
     private List<Denuncia> denuncias = new ArrayList<>();
 
-    // Um Usuario pode ter muitas Avaliacoes
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL,
-            orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Avaliacao> avaliacoes = new ArrayList<>();
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRole.ADMIN) {

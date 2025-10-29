@@ -12,16 +12,16 @@ import java.util.Optional;
 
 @Repository
 public interface DenunciaRepository extends JpaRepository<Denuncia, Long> {
-    @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario JOIN FETCH d.endereco LEFT JOIN FETCH d.respostas")
+    @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario JOIN FETCH d.endereco LEFT JOIN FETCH d.respostas LEFT JOIN FETCH d.anexo")
     List<Denuncia> findAllWithAssociations();
 
-    @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario u JOIN FETCH d.endereco e LEFT JOIN FETCH d.respostas r WHERE u.id = :userId")
+    @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario u JOIN FETCH d.endereco e LEFT JOIN FETCH d.respostas r LEFT JOIN FETCH d.anexo WHERE u.id = :userId")
     List<Denuncia> findByUsuarioId(Long userId);
 
-    @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario JOIN FETCH d.endereco LEFT JOIN FETCH d.respostas WHERE d.status = :status")
+    @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario JOIN FETCH d.endereco LEFT JOIN FETCH d.respostas LEFT JOIN FETCH d.anexo WHERE d.status = :status")
     List<Denuncia> findAllByStatusWithAssociations(StatusDenuncia status);
 
-    @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario JOIN FETCH d.endereco LEFT JOIN FETCH d.respostas WHERE d.id = :id")
+    @Query("SELECT DISTINCT d FROM Denuncia d JOIN FETCH d.usuario JOIN FETCH d.endereco LEFT JOIN FETCH d.respostas LEFT JOIN FETCH d.anexo WHERE d.id = :id")
     Optional<Denuncia> findByIdWithAssociations(Long id);
 
     long countByStatus(StatusDenuncia status);

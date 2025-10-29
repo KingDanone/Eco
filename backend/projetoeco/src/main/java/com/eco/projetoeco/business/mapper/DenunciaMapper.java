@@ -15,6 +15,7 @@ public interface DenunciaMapper {
 
     DenunciaDTO toDTO(Denuncia denuncia);
 
+    @Mapping(target = "status", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "dataCriacao", ignore = true)
     @Mapping(target = "dataAtualizacao", ignore = true)

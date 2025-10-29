@@ -17,7 +17,6 @@ public interface UsuarioMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "denuncias", ignore = true)
-    @Mapping(target = "avaliacoes", ignore = true)
     Usuario toEntity(UsuarioDTO usuarioDTO);
 
     List<UsuarioDTO> toDTO(List<Usuario> usuarios);

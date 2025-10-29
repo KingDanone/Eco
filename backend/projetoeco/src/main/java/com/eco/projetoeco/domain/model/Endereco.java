@@ -39,8 +39,4 @@ public class Endereco {
     @OneToMany(mappedBy = "endereco",cascade = CascadeType.ALL,
              orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Denuncia> denuncias = new ArrayList<>();
-
-    @OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL,
-            orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<HorariosColeta> horariosColetas = new ArrayList<>();
 }
