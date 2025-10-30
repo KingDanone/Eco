@@ -25,7 +25,7 @@ public class FileController {
     private final StorageService storageService;
 
     @GetMapping("/denuncias/{filename:.+}")
-    @PreAuthorize("isAuthenticated()") // Ou pode ser 'hasRole('ADMIN')' ou uma lógica mais complexa
+    @PreAuthorize("hasRole('ADMIN') or @denunciaServiceImpl.isAnexoOwner(#filename, authentication.principal)")
     public ResponseEntity<Resource> serveDenunciaAnexo(@PathVariable String filename, HttpServletRequest request) {
         log.info("Tentativa de servir anexo de denúncia: {}", filename);
         Resource resource = storageService.recuperarComoRecurso("denuncias/" + filename);

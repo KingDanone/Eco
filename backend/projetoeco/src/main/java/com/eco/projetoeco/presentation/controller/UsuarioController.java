@@ -33,14 +33,14 @@ public class UsuarioController {
     }
 
     @PutMapping("/{cpf}")
-    @PreAuthorize("hasRole('ADMIN') or #cpf == authentication.principal.username")
+    @PreAuthorize("hasRole('ADMIN') or #cpf == authentication.principal.cpf")
     public ResponseEntity<UsuarioDTO> editar(@PathVariable String cpf, @Valid @RequestBody UsuarioDTO dto) {
         UsuarioDTO usuarioAtualizado = service.editar(cpf, dto);
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
     @PutMapping("/{cpf}/senha")
-    @PreAuthorize("hasRole('ADMIN') or #cpf == authentication.principal.username")
+    @PreAuthorize("hasRole('ADMIN') or #cpf == authentication.principal.cpf")
     public ResponseEntity<Void> alterarSenha(@PathVariable String cpf,
                                              @Valid @RequestBody UsuarioSenhaDTO dto) {
         service.alterarSenha(cpf, dto);
@@ -48,7 +48,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{cpf}")
-    @PreAuthorize("hasRole('ADMIN') or #cpf == authentication.principal.username")
+    @PreAuthorize("hasRole('ADMIN') or #cpf == authentication.principal.cpf")
     public ResponseEntity<UsuarioDTO> buscarPorCpf(@PathVariable String cpf) {
         return ResponseEntity.ok(service.buscarPorCpf(cpf));
     }

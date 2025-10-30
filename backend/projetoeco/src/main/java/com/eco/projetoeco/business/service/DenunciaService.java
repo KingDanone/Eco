@@ -17,4 +17,5 @@ public interface DenunciaService {
     DenunciaDTO editarDenuncia(Long id, EditarDenunciaDTO dados, UserDetails userDetails);
     DenunciaDTO atualizarStatus(Long id, UpdateDenunciaStatusDTO statusDTO);
     boolean isOwner(Long id, String username);
+    boolean isAnexoOwner(String partialPath, UserDetails user);
 }

@@ -28,10 +28,4 @@ public class EnderecoController {
         return ResponseEntity.ok(service.listarTodos());
     }
 
-    @DeleteMapping("/{cep}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deletar(@PathVariable String cep) {
-        service.deletarPorCep(cep);
-        return ResponseEntity.noContent().build();
-    }
 }

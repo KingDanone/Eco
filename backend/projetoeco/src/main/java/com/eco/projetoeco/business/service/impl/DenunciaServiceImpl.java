@@ -173,4 +173,11 @@ public class DenunciaServiceImpl implements DenunciaService {
                 .map(denuncia -> denuncia.getUsuario().getEmail().equals(username))
                 .orElse(false);
     }
+
+    public boolean isAnexoOwner(String partialPath, UserDetails user) {
+        String fullPath = "denuncias/" + partialPath;
+        return anexoRepository.findByCaminhoArmazenado(fullPath)
+                .map(anexo -> anexo.getDenuncia().getUsuario().getEmail().equals(user.getUsername()))
+                .orElse(false);
+    }
 }
