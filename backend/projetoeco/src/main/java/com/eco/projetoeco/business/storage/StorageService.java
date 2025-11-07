@@ -39,9 +39,4 @@ public interface StorageService {
      * @param caminhoArquivo O caminho relativo (incluindo o nome do arquivo) do arquivo a ser deletado.
      */
     void deletar(String caminhoArquivo);
-
-    /**
-     * Inicializa o diretório de armazenamento, se necessário.
-     */
-    void init();
 }

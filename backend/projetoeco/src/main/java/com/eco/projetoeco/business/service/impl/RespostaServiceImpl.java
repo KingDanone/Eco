@@ -33,7 +33,7 @@ public class RespostaServiceImpl implements RespostaService {
         // 1. Buscar a Denuncia
         Denuncia denuncia = denunciaRepository.findById(dto.getDenunciaId())
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("Denuncia com Id" + dto.getDenunciaId() + " não encontrado com o CPF")
+                        () -> new ResourceNotFoundException("Denuncia com Id" + dto.getDenunciaId() + " não encontrada")
                 );
 
         // 2. Mapear DTO para entidade Resposta
