@@ -7,7 +7,9 @@ import com.eco.projetoeco.presentation.dto.RespostaDTO;
 import com.eco.projetoeco.presentation.dto.UsuarioDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,7 +59,8 @@ public class DenunciaDTO {
     private UsuarioDTO usuario;
 
     @Schema(description = "Endereço relacionado à denúncia")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotNull(message = "Endereço é obrigatório")
+    @Valid
     private EnderecoDTO endereco;
 
     @Schema(description = "Respostas associadas à denúncia", accessMode = Schema.AccessMode.READ_ONLY)
